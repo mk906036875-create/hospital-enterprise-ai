@@ -1,240 +1,314 @@
  <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>MEDORA AI | Executive Healthcare Command Center</title>
-
-  <meta name="description"
-    content="MEDORA AI - Premium AI-powered healthcare workflow automation concept demo.">
-
-  <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-
-<div class="app">
-
-  <!-- ================= HEADER ================= -->
-
-  <header class="topbar">
-
-    <div class="brand">
-
-      <div class="brand-logo">
-        ✦
-      </div>
-
-      <div>
-        <h1>MEDORA <span>AI</span></h1>
-        <p>Executive Healthcare Command Center</p>
-      </div>
-
-    </div>
-
-    <div class="top-actions">
-
-      <div class="demo-pill">
-        <span class="live-dot"></span>
-        DEMO SYSTEM ONLINE
-      </div>
-
-      <button class="contact-btn"
-        onclick="openWhatsApp()">
-        💬 Contact
-      </button>
-
-    </div>
-
-  </header>
-
-
-  <!-- ================= HERO ================= -->
-
-  <section class="hero">
-
-    <div class="hero-content">
-
-      <div class="eyebrow">
-        ✦ NEXT-GENERATION HEALTHCARE AUTOMATION
-      </div>
-
-      <h2>
-        Turn Hospital Operations
-        <span>Into Intelligence.</span>
-      </h2>
-
-      <p>
-        MEDORA AI brings workflow monitoring, operational intelligence
-        and automation into one executive command center.
-      </p>
-
-      <div class="hero-buttons">
-
-        <button class="primary-btn"
-          onclick="openWorkflow('AI Workflow Builder')">
-          ✦ Explore AI Workflow
-        </button>
-
-        <button class="secondary-btn"
-          onclick="openWhatsApp()">
-          Talk to Us →
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <!-- AI CORE -->
-
-    <div class="ai-core">
-
-      <div class="core-ring ring-one"></div>
-      <div class="core-ring ring-two"></div>
-
-      <div class="core-center">
-        <div class="core-symbol">✦</div>
-        <strong>MEDORA</strong>
-        <small>AI CORE</small>
-      </div>
-
-      <div class="core-label label-one">
-        <b>86</b>
-        Doctors
-      </div>
-
-      <div class="core-label label-two">
-        <b>1.2K</b>
-        Patients
-      </div>
-
-      <div class="core-label label-three">
-        <b>18</b>
-        Beds
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- ================= KPI ================= -->
-
-  <section class="kpi-grid">
-
-    <div class="kpi-card blue">
-
-      <div class="kpi-top">
-        <span>ACTIVE PATIENTS</span>
-        <i>👥</i>
-      </div>
-
-      <strong>1,284</strong>
-
-      <small class="up">
-        ↑ 8.4% today
-      </small>
-
-      <div class="progress">
-        <span style="width:78%"></span>
-      </div>
-
-    </div>
-
-
-    <div class="kpi-card red">
-
-      <div class="kpi-top">
-        <span>EMERGENCY CASES</span>
-        <i>🚑</i>
-      </div>
-
-      <strong>07</strong>
-
-      <small class="danger">
-        2 high priority
-      </small>
-
-      <div class="progress">
-        <span style="width:42%"></span>
-      </div>
-
-    </div>
-
-
-    <div class="kpi-card purple">
-
-      <div class="kpi-top">
-        <span>DOCTORS ONLINE</span>
-        <i>👨‍⚕️</i>
-      </div>
-
-      <strong>86</strong>
-
-      <small class="up">
-        93% availability
-      </small>
-
-      <div class="progress">
-        <span style="width:93%"></span>
-      </div>
-
-    </div>
-
-
-    <div class="kpi-card green">
-
-      <div class="kpi-top">
-        <span>BEDS AVAILABLE</span>
-        <i>🛏️</i>
-      </div>
-
-      <strong>18</strong>
-
-      <small class="warning">
-        Capacity monitoring
-      </small>
-
-      <div class="progress">
-        <span style="width:31%"></span>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- ================= MAIN GRID ================= -->
-
-  <section class="main-grid">
-
-
-    <!-- AI ENGINE -->
-
-    <div class="panel ai-panel">
-
-      <div class="panel-header">
-
-        <div>
-          <span class="section-tag">
-            AI ENGINE
-          </span>
-
-          <h3>
-            MEDORA Intelligence
-          </h3>
-        </div>
-
-        <span class="status-badge">
-          ● ACTIVE
-        </span>
-
-      </div>
-
-
-      <div class="intelligence">
-
-        <div class="signal">
-          <span></span
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MEDORA AI | Healthcare Intelligence Command Center</title>
+
+<meta name="description"
+content="MEDORA AI Premium Healthcare Intelligence Command Center Demo">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+:root{
+  --bg:#020617;
+  --panel:rgba(10,20,40,.76);
+  --panel2:rgba(15,30,55,.88);
+  --line:rgba(148,163,184,.16);
+  --white:#f8fafc;
+  --muted:#94a3b8;
+  --cyan:#22d3ee;
+  --blue:#3b82f6;
+  --purple:#8b5cf6;
+  --pink:#ec4899;
+  --green:#34d399;
+  --yellow:#facc15;
+  --red:#fb7185;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  min-height:100vh;
+  font-family:Inter,Arial,sans-serif;
+  color:var(--white);
+  background:
+    radial-gradient(circle at 10% 5%,rgba(34,211,238,.18),transparent 25%),
+    radial-gradient(circle at 90% 10%,rgba(139,92,246,.18),transparent 25%),
+    radial-gradient(circle at 50% 100%,rgba(236,72,153,.08),transparent 30%),
+    linear-gradient(135deg,#01030a,#061426,#020617);
+  overflow-x:hidden;
+}
+
+button,
+select,
+textarea{
+  font:inherit;
+}
+
+button{
+  -webkit-tap-highlight-color:transparent;
+}
+
+.app{
+  width:min(1450px,94%);
+  margin:20px auto;
+}
+
+/* HEADER */
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  padding:18px 22px;
+  border:1px solid var(--line);
+  border-radius:24px;
+  background:rgba(2,6,23,.72);
+  backdrop-filter:blur(20px);
+  box-shadow:0 25px 90px rgba(0,0,0,.4);
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+
+.logoIcon{
+  width:54px;
+  height:54px;
+  display:grid;
+  place-items:center;
+  border-radius:17px;
+  font-size:28px;
+  background:
+    linear-gradient(135deg,#06b6d4,#2563eb,#8b5cf6,#ec4899);
+  box-shadow:
+    0 0 30px rgba(34,211,238,.25),
+    0 0 50px rgba(139,92,246,.12);
+}
+
+.logo h1{
+  font-size:23px;
+  letter-spacing:1px;
+}
+
+.logo p{
+  margin-top:3px;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.status{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:10px 15px;
+  border-radius:50px;
+  border:1px solid rgba(52,211,153,.22);
+  background:rgba(52,211,153,.07);
+  color:#a7f3d0;
+  font-size:10px;
+  font-weight:800;
+}
+
+.dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 18px var(--green);
+  animation:blink 1.6s infinite;
+}
+
+@keyframes blink{
+  50%{opacity:.3}
+}
+
+/* LAYOUT */
+
+.layout{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  gap:17px;
+  margin-top:17px;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  height:max-content;
+  padding:15px;
+  border:1px solid var(--line);
+  border-radius:21px;
+  background:var(--panel);
+  box-shadow:0 20px 70px rgba(0,0,0,.3);
+}
+
+.sideTitle{
+  margin:7px 10px 12px;
+  color:#64748b;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:1.6px;
+}
+
+.nav{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  margin-bottom:5px;
+  padding:12px;
+  border:1px solid transparent;
+  border-radius:13px;
+  background:transparent;
+  color:#aebdce;
+  text-align:left;
+  cursor:pointer;
+  transition:.25s;
+}
+
+.nav:hover,
+.nav.active{
+  color:#fff;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(34,211,238,.12),
+      rgba(139,92,246,.08)
+    );
+  border-color:rgba(34,211,238,.2);
+  transform:translateX(2px);
+}
+
+.navIcon{
+  width:25px;
+  text-align:center;
+  font-size:17px;
+}
+
+.demoBox{
+  margin-top:22px;
+  padding:14px;
+  border-radius:15px;
+  border:1px solid var(--line);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(34,211,238,.09),
+      rgba(139,92,246,.08),
+      rgba(236,72,153,.05)
+    );
+}
+
+.demoBox small{
+  color:var(--muted);
+  font-size:9px;
+}
+
+.demoBox strong{
+  display:block;
+  margin-top:5px;
+  font-size:13px;
+}
+
+/* MAIN */
+
+.hero{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:20px;
+  padding:5px 2px 17px;
+}
+
+.hero h2{
+  font-size:clamp(28px,4vw,45px);
+  line-height:1;
+  letter-spacing:-1.5px;
+}
+
+.hero h2 span{
+  color:var(--cyan);
+}
+
+.hero p{
+  margin-top:9px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.branch{
+  padding:11px 13px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  outline:none;
+  background:var(--panel);
+  color:white;
+}
+
+/* COMMON CARD */
+
+.card{
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:var(--panel);
+  box-shadow:0 20px 70px rgba(0,0,0,.27);
+  backdrop-filter:blur(15px);
+}
+
+/* KPI */
+
+.kpis{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+
+.kpi{
+  position:relative;
+  overflow:hidden;
+  padding:18px;
+  transition:.25s;
+}
+
+.kpi:hover{
+  transform:translateY(-3px);
+  border-color:rgba(34,211,238,.25);
+}
+
+.kpi:before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:45%;
+  height:2px;
+  background:linear-gradient(90deg,var(--cyan),var(--purple),transparent);
+}
+
+.kpi:after{
+  content:"";
+  position:absolute;
+  right:-40px;
+  bottom:-40px;
+  width:110px;
+  height:110px;
+  border-radius:50%;
+  background:rgba(34,211,238,.07);
+}
+
+.label{
+  color:var(--muted);
+  font-size:10
