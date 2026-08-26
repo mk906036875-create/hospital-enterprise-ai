@@ -1,1547 +1,588 @@
  <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MEDORA AI | Hospital Intelligence Command Center</title>
+  <title>MEDORA AI | Executive Healthcare Command Center</title>
 
-<meta name="description" content="MEDORA AI - Hospital Intelligence Command Center demo">
+  <meta name="description"
+    content="MEDORA AI Executive Healthcare Command Center — interactive workflow automation demo.">
 
-<style>
-
-:root{
---bg:#030712;
---panel:rgba(15,23,42,.78);
---panel2:rgba(15,30,50,.9);
---line:rgba(148,163,184,.16);
---text:#f8fafc;
---muted:#94a3b8;
---cyan:#22d3ee;
---green:#34d399;
---blue:#60a5fa;
---purple:#a78bfa;
---yellow:#facc15;
---red:#fb7185;
-}
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-body{
-font-family:Inter,Arial,sans-serif;
-background:
-radial-gradient(circle at 10% 0%,rgba(34,211,238,.14),transparent 25%),
-radial-gradient(circle at 90% 5%,rgba(167,139,250,.13),transparent 25%),
-linear-gradient(135deg,#020617,#071525,#020617);
-color:var(--text);
-min-height:100vh;
-}
-
-button,select,textarea{
-font-family:inherit;
-}
-
-.app{
-width:min(1450px,94%);
-margin:20px auto;
-}
-
-/* HEADER */
-
-.header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:18px 22px;
-border:1px solid var(--line);
-border-radius:22px;
-background:rgba(2,6,23,.76);
-backdrop-filter:blur(20px);
-box-shadow:0 25px 80px rgba(0,0,0,.35);
-}
-
-.logo{
-display:flex;
-align-items:center;
-gap:13px;
-}
-
-.logoIcon{
-width:52px;
-height:52px;
-display:grid;
-place-items:center;
-border-radius:16px;
-font-size:27px;
-background:linear-gradient(135deg,#0891b2,#2563eb,#7c3aed);
-box-shadow:0 0 35px rgba(34,211,238,.25);
-}
-
-.logo h1{
-font-size:22px;
-letter-spacing:.8px;
-}
-
-.logo p{
-font-size:11px;
-color:var(--muted);
-margin-top:4px;
-}
-
-.status{
-display:flex;
-align-items:center;
-gap:9px;
-padding:9px 14px;
-border-radius:50px;
-background:rgba(52,211,153,.08);
-border:1px solid rgba(52,211,153,.2);
-font-size:11px;
-font-weight:bold;
-color:#a7f3d0;
-}
-
-.dot{
-width:9px;
-height:9px;
-border-radius:50%;
-background:var(--green);
-box-shadow:0 0 16px var(--green);
-animation:blink 1.7s infinite;
-}
-
-@keyframes blink{
-50%{opacity:.35}
-}
-
-/* LAYOUT */
-
-.layout{
-display:grid;
-grid-template-columns:220px 1fr;
-gap:17px;
-margin-top:17px;
-}
-
-/* SIDEBAR */
-
-.sidebar{
-background:var(--panel);
-border:1px solid var(--line);
-border-radius:20px;
-padding:15px;
-height:max-content;
-box-shadow:0 20px 60px rgba(0,0,0,.25);
-}
-
-.sideTitle{
-font-size:9px;
-color:#64748b;
-font-weight:bold;
-letter-spacing:1.5px;
-margin:7px 10px 12px;
-}
-
-.nav{
-width:100%;
-padding:12px;
-border-radius:12px;
-border:1px solid transparent;
-background:transparent;
-color:#aebdce;
-display:flex;
-align-items:center;
-gap:11px;
-cursor:pointer;
-text-align:left;
-margin-bottom:5px;
-transition:.2s;
-}
-
-.nav:hover,
-.nav.active{
-color:white;
-background:rgba(34,211,238,.08);
-border-color:rgba(34,211,238,.17);
-transform:translateX(2px);
-}
-
-.navIcon{
-width:25px;
-text-align:center;
-font-size:17px;
-}
-
-.demoBox{
-margin-top:22px;
-padding:14px;
-border-radius:15px;
-border:1px solid var(--line);
-background:linear-gradient(135deg,rgba(34,211,238,.08),rgba(167,139,250,.07));
-}
-
-.demoBox small{
-color:var(--muted);
-font-size:9px;
-}
-
-.demoBox strong{
-display:block;
-margin-top:5px;
-font-size:13px;
-}
-
-/* MAIN */
-
-.hero{
-display:flex;
-justify-content:space-between;
-align-items:end;
-gap:20px;
-padding:4px 2px 17px;
-}
-
-.hero h2{
-font-size:clamp(26px,3.5vw,42px);
-line-height:1;
-}
-
-.hero h2 span{
-color:var(--cyan);
-}
-
-.hero p{
-font-size:12px;
-color:var(--muted);
-margin-top:9px;
-}
-
-.branch{
-padding:11px 13px;
-border-radius:12px;
-background:var(--panel);
-border:1px solid var(--line);
-color:white;
-outline:none;
-}
-
-/* KPI */
-
-.kpis{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:12px;
-}
-
-.card{
-background:var(--panel);
-border:1px solid var(--line);
-border-radius:18px;
-box-shadow:0 20px 60px rgba(0,0,0,.25);
-}
-
-.kpi{
-padding:17px;
-position:relative;
-overflow:hidden;
-}
-
-.kpi:after{
-content:"";
-position:absolute;
-width:90px;
-height:90px;
-right:-35px;
-bottom:-35px;
-border-radius:50%;
-background:rgba(34,211,238,.06);
-}
-
-.label{
-font-size:10px;
-color:var(--muted);
-font-weight:bold;
-}
-
-.value{
-font-size:30px;
-font-weight:800;
-margin-top:6px;
-}
-
-.change{
-font-size:10px;
-margin-top:4px;
-}
-
-.green{color:var(--green)}
-.red{color:var(--red)}
-.yellow{color:var(--yellow)}
-.blue{color:var(--blue)}
-
-/* GRID */
-
-.grid{
-display:grid;
-grid-template-columns:1.2fr .8fr;
-gap:14px;
-margin-top:14px;
-}
-
-/* AI CARD */
-
-.ai{
-padding:19px;
-min-height:285px;
-background:
-radial-gradient(circle at 80% 0%,rgba(34,211,238,.12),transparent 35%),
-var(--panel);
-}
-
-.head{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:14px;
-}
-
-.head h3{
-font-size:14px;
-}
-
-.head span{
-font-size:9px;
-color:var(--muted);
-}
-
-.orb{
-width:92px;
-height:92px;
-margin:16px auto;
-display:grid;
-place-items:center;
-border-radius:50%;
-font-size:36px;
-background:radial-gradient(circle,rgba(34,211,238,.55),rgba(34,211,238,.07) 58%,transparent 70%);
-border:1px solid rgba(34,211,238,.3);
-animation:pulse 2.5s infinite;
-}
-
-@keyframes pulse{
-50%{
-box-shadow:0 0 0 20px rgba(34,211,238,0);
-}
-}
-
-.aiTitle{
-text-align:center;
-font-size:17px;
-font-weight:800;
-}
-
-.aiSub{
-text-align:center;
-color:var(--muted);
-font-size:10px;
-margin-top:5px;
-}
-
-.mini{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:8px;
-margin-top:19px;
-}
-
-.mini div{
-padding:10px;
-border-radius:11px;
-background:rgba(255,255,255,.035);
-border:1px solid rgba(255,255,255,.06);
-text-align:center;
-}
-
-.mini strong{
-display:block;
-font-size:12px;
-}
-
-.mini small{
-font-size:8px;
-color:var(--muted);
-}
-
-/* PRIORITY */
-
-.panel{
-padding:18px;
-}
-
-.priority{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:12px;
-border-radius:13px;
-background:rgba(255,255,255,.035);
-border:1px solid rgba(255,255,255,.06);
-margin-bottom:8px;
-}
-
-.priority:last-child{
-margin-bottom:0;
-}
-
-.priorityLeft{
-display:flex;
-align-items:center;
-gap:10px;
-}
-
-.pIcon{
-width:37px;
-height:37px;
-display:grid;
-place-items:center;
-border-radius:10px;
-background:rgba(255,255,255,.06);
-}
-
-.priority strong{
-font-size:11px;
-}
-
-.priority small{
-display:block;
-font-size:9px;
-color:var(--muted);
-margin-top:3px;
-}
-
-.badge{
-padding:5px 8px;
-border-radius:50px;
-font-size:8px;
-font-weight:bold;
-}
-
-.high{
-background:rgba(251,113,133,.12);
-color:#fecdd3;
-}
-
-.medium{
-background:rgba(250,204,21,.1);
-color:#fde68a;
-}
-
-.normal{
-background:rgba(52,211,153,.1);
-color:#a7f3d0;
-}
-
-/* ACTIONS */
-
-.actions{
-margin-top:14px;
-padding:18px;
-}
-
-.actionGrid{
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:9px;
-}
-
-.action{
-padding:14px 6px;
-border-radius:13px;
-background:rgba(255,255,255,.035);
-border:1px solid rgba(255,255,255,.07);
-color:white;
-cursor:pointer;
-transition:.2s;
-}
-
-.action:hover{
-transform:translateY(-3px);
-background:rgba(34,211,238,.08);
-border-color:rgba(34,211,238,.3);
-}
-
-.action div{
-font-size:21px;
-}
-
-.action span{
-display:block;
-font-size:9px;
-margin-top:6px;
-color:#cbd5e1;
-}
-
-/* ACTIVITY */
-
-.activity{
-margin-top:14px;
-padding:18px;
-}
-
-.activityItem{
-display:flex;
-gap:10px;
-padding:11px 0;
-border-bottom:1px solid rgba(255,255,255,.05);
-}
-
-.activityItem:last-child{
-border:none;
-}
-
-.activityDot{
-width:7px;
-height:7px;
-margin-top:5px;
-border-radius:50%;
-background:var(--cyan);
-box-shadow:0 0 12px var(--cyan);
-flex-shrink:0;
-}
-
-.activityItem strong{
-font-size:10px;
-}
-
-.activityItem small{
-display:block;
-color:var(--muted);
-font-size:8px;
-margin-top:3px;
-}
-
-/* CONTACT */
-
-.contact{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
-margin-top:14px;
-}
-
-.contact a{
-text-decoration:none;
-color:white;
-padding:15px;
-border-radius:15px;
-border:1px solid var(--line);
-background:var(--panel);
-display:flex;
-align-items:center;
-gap:10px;
-transition:.2s;
-}
-
-.contact a:hover{
-transform:translateY(-2px);
-border-color:rgba(34,211,238,.35);
-}
-
-.contactIcon{
-font-size:22px;
-}
-
-.contact small{
-display:block;
-color:var(--muted);
-font-size:8px;
-}
-
-.contact strong{
-font-size:11px;
-}
-
-/* MODAL */
-
-.modal{
-position:fixed;
-inset:0;
-display:none;
-place-items:center;
-padding:20px;
-background:rgba(0,0,0,.78);
-z-index:99;
-}
-
-.modal.show{
-display:grid;
-}
-
-.modalBox{
-width:min(520px,100%);
-background:#091525;
-border:1px solid var(--line);
-border-radius:20px;
-padding:20px;
-box-shadow:0 30px 100px rgba(0,0,0,.6);
-}
-
-.modalHead{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:13px;
-}
-
-.modalHead h3{
-font-size:16px;
-}
-
-.close{
-border:0;
-background:transparent;
-color:#94a3b8;
-font-size:24px;
-cursor:pointer;
-}
-
-textarea{
-width:100%;
-min-height:110px;
-resize:vertical;
-padding:12px;
-border-radius:12px;
-border:1px solid var(--line);
-background:#050d18;
-color:white;
-outline:none;
-}
-
-.run{
-width:100%;
-padding:13px;
-margin-top:9px;
-border:0;
-border-radius:12px;
-background:linear-gradient(90deg,#0891b2,#6366f1);
-color:white;
-font-weight:bold;
-cursor:pointer;
-}
-
-.result{
-display:none;
-margin-top:10px;
-padding:12px;
-border-radius:12px;
-background:rgba(52,211,153,.07);
-border:1px solid rgba(52,211,153,.15);
-font-size:11px;
-line-height:1.6;
-color:#d1fae5;
-}
-
-/* FOOTER */
-
-footer{
-text-align:center;
-padding:22px 5px;
-color:#64748b;
-font-size:9px;
-line-height:1.7;
-}
-
-/* RESPONSIVE */
-
-@media(max-width:1000px){
-
-.layout{
-grid-template-columns:1fr;
-}
-
-.sidebar{
-display:flex;
-overflow-x:auto;
-gap:5px;
-}
-
-.sideTitle,
-.demoBox{
-display:none;
-}
-
-.nav{
-min-width:max-content;
-}
-
-}
-
-@media(max-width:780px){
-
-.kpis{
-grid-template-columns:1fr 1fr;
-}
-
-.grid{
-grid-template-columns:1fr;
-}
-
-.actionGrid{
-grid-template-columns:repeat(3,1fr);
-}
-
-.hero{
-flex-direction:column;
-align-items:flex-start;
-}
-
-}
-
-@media(max-width:520px){
-
-.app{
-width:96%;
-margin:9px auto;
-}
-
-.header{
-padding:13px;
-}
-
-.logoIcon{
-width:44px;
-height:44px;
-font-size:23px;
-}
-
-.logo h1{
-font-size:17px;
-}
-
-.status{
-font-size:0;
-padding:10px;
-}
-
-.kpis{
-gap:8px;
-}
-
-.kpi{
-padding:13px;
-}
-
-.value{
-font-size:23px;
-}
-
-.actionGrid{
-grid-template-columns:1fr 1fr;
-}
-
-.contact{
-grid-template-columns:1fr;
-}
-
-.mini{
-grid-template-columns:1fr;
-}
-
-}
-
-</style>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
 <div class="app">
 
-<!-- HEADER -->
+  <!-- HEADER -->
+  <header class="topbar">
 
-<header class="header">
+    <div class="brand">
+      <div class="brand-icon">✦</div>
 
-<div class="logo">
+      <div>
+        <h1>MEDORA <span>AI</span></h1>
+        <p>Executive Healthcare Command Center</p>
+      </div>
+    </div>
 
-<div class="logoIcon">
-🏥
-</div>
+    <div class="header-right">
 
-<div>
+      <div class="demo-label">
+        DEMO MODE
+      </div>
 
-<h1>MEDORA AI</h1>
+      <div class="system-status">
+        <span class="status-dot"></span>
+        SYSTEM ONLINE
+      </div>
 
-<p>Hospital Intelligence Command Center</p>
+    </div>
 
-</div>
+  </header>
 
-</div>
 
-<div class="status">
-<span class="dot"></span>
-AI SYSTEM ONLINE
-</div>
+  <!-- NAVIGATION -->
+  <nav class="navigation">
 
-</header>
+    <button class="nav-btn active" data-section="overview">
+      ◉ Overview
+    </button>
 
+    <button class="nav-btn" data-section="patients">
+      👥 Patients
+    </button>
 
-<div class="layout">
+    <button class="nav-btn" data-section="operations">
+      ⚙ Operations
+    </button>
 
+    <button class="nav-btn" data-section="analytics">
+      📊 Analytics
+    </button>
 
-<!-- SIDEBAR -->
+    <button class="nav-btn" data-section="ai">
+      ✦ AI Engine
+    </button>
 
-<aside class="sidebar">
+  </nav>
 
-<div class="sideTitle">
-COMMAND CENTER
-</div>
 
-<button class="nav active">
-<span class="navIcon">◉</span>
-Overview
-</button>
+  <main>
 
-<button class="nav">
-<span class="navIcon">👥</span>
-Patients
-</button>
+    <!-- HERO -->
+    <section class="hero">
 
-<button class="nav">
-<span class="navIcon">🚑</span>
-Emergency
-</button>
+      <div>
 
-<button class="nav">
-<span class="navIcon">📅</span>
-OPD Queue
-</button>
+        <div class="eyebrow">
+          INTELLIGENT HEALTHCARE OPERATIONS
+        </div>
 
-<button class="nav">
-<span class="navIcon">👨‍⚕️</span>
-Doctors
-</button>
+        <h2>
+          Command your hospital
+          <span>with intelligence.</span>
+        </h2>
 
-<button class="nav">
-<span class="navIcon">🛏️</span>
-Resources
-</button>
+        <p>
+          A unified AI-assisted interface for monitoring workflows,
+          operational signals and hospital resources.
+        </p>
 
-<button class="nav">
-<span class="navIcon">📊</span>
-Analytics
-</button>
+      </div>
 
-<div class="demoBox">
+      <div class="hero-control">
 
-<small>DEMO ENVIRONMENT</small>
+        <label>FACILITY</label>
 
-<strong>MEDORA AI v2.0</strong>
+        <select id="facility">
 
-</div>
+          <option>Central Hospital</option>
+          <option>City Branch</option>
+          <option>North Branch</option>
+          <option>South Branch</option>
 
-</aside>
+        </select>
 
+      </div>
 
-<!-- MAIN -->
+    </section>
 
-<main>
 
+    <!-- KPI -->
+    <section class="metrics">
 
-<section class="hero">
+      <div class="metric">
 
-<div>
+        <div class="metric-top">
+          <span>ACTIVE PATIENTS</span>
+          <b>↗</b>
+        </div>
 
-<h2>
-Hospital <span>Intelligence</span>
-</h2>
+        <strong id="patients">1,284</strong>
 
-<p>
-AI-assisted workflow automation for modern healthcare operations.
-</p>
+        <small class="success">
+          +8.4% today
+        </small>
 
-</div>
+      </div>
 
-<select class="branch" id="branch">
 
-<option>Central Hospital</option>
-<option>City Branch</option>
-<option>North Branch</option>
-<option>South Branch</option>
+      <div class="metric">
 
-</select>
+        <div class="metric-top">
+          <span>EMERGENCY CASES</span>
+          <b>!</b>
+        </div>
 
-</section>
+        <strong id="emergency">07</strong>
 
+        <small class="danger">
+          2 high priority
+        </small>
 
-<!-- KPI -->
+      </div>
 
-<section class="kpis">
 
-<div class="card kpi">
+      <div class="metric">
 
-<div class="label">
-ACTIVE PATIENTS
-</div>
+        <div class="metric-top">
+          <span>DOCTORS ONLINE</span>
+          <b>●</b>
+        </div>
 
-<div class="value">
-1,284
-</div>
+        <strong>86</strong>
 
-<div class="change green">
-↑ 8.4% today
-</div>
+        <small class="success">
+          93% availability
+        </small>
 
-</div>
+      </div>
 
 
-<div class="card kpi">
+      <div class="metric">
 
-<div class="label">
-EMERGENCY CASES
-</div>
+        <div class="metric-top">
+          <span>BEDS AVAILABLE</span>
+          <b>⌂</b>
+        </div>
 
-<div class="value">
-07
-</div>
+        <strong id="beds">18</strong>
 
-<div class="change red">
-2 high priority
-</div>
+        <small class="warning">
+          Capacity monitored
+        </small>
 
-</div>
+      </div>
 
+    </section>
 
-<div class="card kpi">
 
-<div class="label">
-DOCTORS ONLINE
-</div>
+    <!-- DASHBOARD -->
+    <section class="dashboard-grid">
 
-<div class="value">
-86
-</div>
 
-<div class="change green">
-93% availability
-</div>
+      <!-- AI COMMAND -->
+      <div class="panel command-panel">
 
-</div>
+        <div class="panel-heading">
 
+          <div>
+            <span class="section-tag">AI CORE</span>
 
-<div class="card kpi">
+            <h3>MEDORA Intelligence Engine</h3>
+          </div>
 
-<div class="label">
-BEDS AVAILABLE
-</div>
+          <span class="live-badge">
+            LIVE
+          </span>
 
-<div class="value">
-18
-</div>
+        </div>
 
-<div class="change yellow">
-Monitor capacity
-</div>
 
-</div>
+        <div class="ai-center">
 
-</section>
+          <div class="ai-ring">
 
+            <div class="ai-core">
+              ✦
+            </div>
 
-<!-- GRID -->
+          </div>
 
-<section class="grid">
+          <h3>Intelligence Active</h3>
 
+          <p>
+            Monitoring operational workflow signals
+          </p>
 
-<!-- AI ENGINE -->
+        </div>
 
-<div class="card ai">
 
-<div class="head">
+        <div class="engine-status">
 
-<h3>
-🤖 AI Operations Engine
-</h3>
+          <div>
+            <strong>ACTIVE</strong>
+            <small>Workflow Engine</small>
+          </div>
 
-<span>
-LIVE DEMO
-</span>
+          <div>
+            <strong>READY</strong>
+            <small>Automation Layer</small>
+          </div>
 
-</div>
+          <div>
+            <strong>ONLINE</strong>
+            <small>Command Layer</small>
+          </div>
 
+        </div>
 
-<div class="orb">
-✦
-</div>
+      </div>
 
-<div class="aiTitle">
-MEDORA Intelligence Active
-</div>
 
-<div class="aiSub">
-Monitoring workflow signals and operational priorities
-</div>
+      <!-- PRIORITY -->
+      <div class="panel">
 
+        <div class="panel-heading">
 
-<div class="mini">
+          <div>
+            <span class="section-tag">OPERATIONS</span>
+            <h3>Priority Monitor</h3>
+          </div>
 
-<div>
+          <span class="muted">
+            SIMULATED
+          </span>
 
-<strong class="green">
-ACTIVE
-</strong>
+        </div>
 
-<small>
-Workflow Engine
-</small>
 
-</div>
+        <div class="priority high-priority">
 
-<div>
+          <div class="priority-icon">
+            🚑
+          </div>
 
-<strong class="green">
-READY
-</strong>
+          <div class="priority-info">
 
-<small>
-Lead Capture
-</small>
+            <strong>Emergency Queue</strong>
 
-</div>
+            <small>
+              2 cases require attention
+            </small>
 
-<div>
+          </div>
 
-<strong class="blue">
-ONLINE
-</strong>
+          <span class="priority-badge high">
+            HIGH
+          </span>
 
-<small>
-Command Layer
-</small>
+        </div>
 
-</div>
 
-</div>
+        <div class="priority">
 
-</div>
+          <div class="priority-icon">
+            📅
+          </div>
 
+          <div class="priority-info">
 
-<!-- PRIORITY -->
+            <strong>OPD Waiting</strong>
 
-<div class="card panel">
+            <small>
+              24 patients waiting
+            </small>
 
-<div class="head">
+          </div>
 
-<h3>
-🚨 Priority Monitor
-</h3>
+          <span class="priority-badge medium">
+            MEDIUM
+          </span>
 
-<span>
-DEMO DATA
-</span>
+        </div>
 
-</div>
 
+        <div class="priority">
 
-<div class="priority">
+          <div class="priority-icon">
+            🛏️
+          </div>
 
-<div class="priorityLeft">
+          <div class="priority-info">
 
-<div class="pIcon">
-🚑
-</div>
+            <strong>Bed Capacity</strong>
 
-<div>
+            <small>
+              18 beds available
+            </small>
 
-<strong>
-Emergency Queue
-</strong>
+          </div>
 
-<small>
-2 cases require attention
-</small>
+          <span class="priority-badge normal">
+            NORMAL
+          </span>
 
-</div>
+        </div>
 
-</div>
+      </div>
 
-<span class="badge high">
-HIGH
-</span>
+    </section>
 
-</div>
 
+    <!-- AI ACTIONS -->
+    <section class="panel actions-panel">
 
-<div class="priority">
+      <div class="panel-heading">
 
-<div class="priorityLeft">
+        <div>
+          <span class="section-tag">AUTOMATION</span>
+          <h3>AI Workflow Actions</h3>
+        </div>
 
-<div class="pIcon">
-📅
-</div>
+        <span class="muted">
+          INTERACTIVE DEMO
+        </span>
 
-<div>
+      </div>
 
-<strong>
-OPD Waiting
-</strong>
 
-<small>
-24 patients
-</small>
+      <div class="action-grid">
 
-</div>
+        <button class="action-btn" data-action="Emergency Workflow">
+          <span>🚑</span>
+          Emergency
+        </button>
 
-</div>
+        <button class="action-btn" data-action="OPD Workflow">
+          <span>📅</span>
+          OPD Queue
+        </button>
 
-<span class="badge medium">
-MEDIUM
-</span>
+        <button class="action-btn" data-action="Resource Monitoring">
+          <span>🛏️</span>
+          Resources
+        </button>
 
-</div>
+        <button class="action-btn" data-action="Doctor Availability">
+          <span>👨‍⚕️</span>
+          Doctors
+        </button>
 
+        <button class="action-btn" data-action="Hospital Analytics">
+          <span>📊</span>
+          Analytics
+        </button>
 
-<div class="priority">
+        <button class="action-btn" data-action="AI Workflow Builder">
+          <span>✦</span>
+          AI Builder
+        </button>
 
-<div class="priorityLeft">
+      </div>
 
-<div class="pIcon">
-🛏️
-</div>
+    </section>
 
-<div>
 
-<strong>
-Bed Capacity
-</strong>
+    <!-- ACTIVITY + INSIGHTS -->
+    <section class="lower-grid">
 
-<small>
-18 beds available
-</small>
 
-</div>
+      <div class="panel">
 
-</div>
+        <div class="panel-heading">
 
-<span class="badge normal">
-NORMAL
-</span>
+          <div>
+            <span class="section-tag">SYSTEM FEED</span>
+            <h3>Live Activity</h3>
+          </div>
 
-</div>
+          <span class="muted">
+            AUTO REFRESH
+          </span>
 
-</div>
+        </div>
 
-</section>
+        <div id="activityFeed">
 
+          <div class="activity">
+            <span></span>
 
-<!-- ACTIONS -->
+            <div>
+              <strong>
+                AI workflow signal detected
+              </strong>
 
-<section class="card actions">
+              <small>
+                Just now • MEDORA Engine
+              </small>
+            </div>
+          </div>
 
-<div class="head">
 
-<h3>
-⚡ AI Actions
-</h3>
+          <div class="activity">
+            <span></span>
 
-<span>
-INTERACTIVE DEMO
-</span>
+            <div>
+              <strong>
+                Doctor availability synchronized
+              </strong>
 
-</div>
+              <small>
+                2 minutes ago • Operations
+              </small>
+            </div>
+          </div>
 
 
-<div class="actionGrid">
+          <div class="activity">
+            <span></span>
 
-<button class="action" onclick="openDemo('Emergency Workflow')">
-<div>🚑</div>
-<span>Emergency</span>
-</button>
+            <div>
+              <strong>
+                Resource status refreshed
+              </strong>
 
-<button class="action" onclick="openDemo('OPD Queue')">
-<div>📅</div>
-<span>OPD Queue</span>
-</button>
+              <small>
+                5 minutes ago • Command Center
+              </small>
+            </div>
+          </div>
 
-<button class="action" onclick="openDemo('Resource Monitor')">
-<div>🛏️</div>
-<span>Resources</span>
-</button>
+        </div>
 
-<button class="action" onclick="openDemo('Doctor Availability')">
-<div>👨‍⚕️</div>
-<span>Doctors</span>
-</button>
+      </div>
 
-<button class="action" onclick="openDemo('Hospital Analytics')">
-<div>📊</div>
-<span>Analytics</span>
-</button>
 
-</div>
+      <!-- AI INSIGHT -->
+      <div class="panel insight-panel">
 
-</section>
+        <span class="section-tag">
+          AI INSIGHT
+        </span>
 
+        <h3>
+          Operational Recommendation
+        </h3>
 
-<!-- ACTIVITY -->
+        <p id="insight">
+          Current simulated signals indicate that emergency
+          queue monitoring should remain a priority.
+        </p>
 
-<section class="card activity">
+        <button class="primary-btn" id="insightBtn">
+          ✦ Generate AI Insight
+        </button>
 
-<div class="head">
+      </div>
 
-<h3>
-🔔 Live Activity
-</h3>
+    </section>
 
-<span>
-SIMULATED FEED
-</span>
 
-</div>
+    <!-- CONTACT -->
+    <section class="contact-section">
 
+      <div>
 
-<div id="feed">
+        <span class="section-tag">
+          REQUEST A DEMO
+        </span>
 
-<div class="activityItem">
+        <h3>
+          Explore MEDORA AI for your organization.
+        </h3>
 
-<span class="activityDot"></span>
+        <p>
+          Connect directly for a product demonstration.
+        </p>
 
-<div>
+      </div>
 
-<strong>
-New OPD workflow request detected
-</strong>
 
-<small>
-Just now • Central Hospital
-</small>
+      <div class="contact-buttons">
 
-</div>
+        <a
+          class="contact-btn whatsapp"
+          href="https://wa.me/919919900020"
+          target="_blank"
+          rel="noopener"
+        >
+          💬 WhatsApp
+        </a>
 
-</div>
 
+        <a
+          class="contact-btn email"
+          href="mailto:mk906036875@gmail.com?subject=MEDORA%20AI%20Demo"
+        >
+          ✉ Email
+        </a>
 
-<div class="activityItem">
+      </div>
 
-<span class="activityDot"></span>
+    </section>
 
-<div>
+  </main>
 
-<strong>
-Doctor availability updated
-</strong>
 
-<small>
-2 minutes ago • Cardiology
-</small>
+  <footer>
 
-</div>
+    <strong>MEDORA AI</strong>
+    • Executive Healthcare Intelligence Demo
 
-</div>
+    <br>
 
+    © 2026 MEDORA AI • Concept / Demo Environment
 
-<div class="activityItem">
+    <br>
 
-<span class="activityDot"></span>
+    ⚠️ This interface uses simulated data and is not a medical
+    diagnosis, treatment or emergency-response system.
 
-<div>
-
-<strong>
-Resource status refreshed
-</strong>
-
-<small>
-5 minutes ago • Operations
-</small>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- CONTACT -->
-
-<section class="contact">
-
-<a href="https://wa.me/919919900020" target="_blank">
-
-<div class="contactIcon">
-💬
-</div>
-
-<div>
-
-<small>WHATSAPP</small>
-
-<strong>
-Chat for a Demo
-</strong>
-
-</div>
-
-</a>
-
-
-<a href="mailto:mk906036875@gmail.com?subject=MEDORA%20AI%20Demo">
-
-<div class="contactIcon">
-✉️
-</div>
-
-<div>
-
-<small>EMAIL</small>
-
-<strong>
-mk906036875@gmail.com
-</strong>
-
-</div>
-
-</a>
-
-</section>
-
-
-<footer>
-
-<strong>MEDORA AI</strong>
-• Hospital workflow automation concept demo.
-
-<br>
-
-© 2026 MEDORA AI • Built for demonstration purposes.
-
-<br>
-
-⚠️ This interface is a concept/demo only. It is not a medical diagnosis,
-treatment or emergency-response system.
-
-</footer>
-
-
-</main>
-
-</div>
+  </footer>
 
 </div>
 
 
 <!-- MODAL -->
-
 <div class="modal" id="modal">
 
-<div class="modalBox">
+  <div class="modal-box">
 
-<div class="modalHead">
+    <div class="modal-header">
 
-<h3 id="modalTitle">
-✦ AI Workflow
-</h3>
+      <div>
+        <span class="section-tag">MEDORA AI</span>
+        <h3 id="modalTitle">
+          AI Workflow
+        </h3>
+      </div>
 
-<button class="close" onclick="closeDemo()">
-×
-</button>
+      <button id="closeModal">×</button>
 
-</div>
+    </div>
 
 
-<textarea id="input"
-placeholder="Describe a workflow you want to explore..."></textarea>
+    <p class="modal-description">
+      Describe the workflow you want to explore.
+    </p>
 
 
-<button class="run" onclick="runAI()">
-✦ Run MEDORA Demo Intelligence
-</button>
+    <textarea
+      id="workflowInput"
+      placeholder="Example: Automate follow-up for OPD patients..."
+    ></textarea>
 
 
-<div class="result" id="result"></div>
+    <button
+      class="primary-btn full"
+      id="runWorkflow"
+    >
+      ✦ Run MEDORA Simulation
+    </button>
 
-</div>
 
-</div>
-
-
-<script>
-
-/* NAVIGATION */
-
-document.querySelectorAll(".nav").forEach(function(btn){
-
-btn.addEventListener("click",function(){
-
-document.querySelectorAll(".nav")
-.forEach(function(item){
-item.classList.remove("active");
-});
-
-btn.classList.add("active");
-
-});
-
-});
-
-
-/* MODAL */
-
-const modal=document.getElementById("modal");
-
-const modalTitle=document.getElementById("modalTitle");
-
-const input=document.getElementById("input");
-
-const result=document.getElementById("result");
-
-
-function openDemo(type){
-
-modal.classList.add("show");
-
-modalTitle.innerText="✦ "+type+" — AI Demo";
-
-input.value="Explore "+type+" workflow for a hospital.";
-
-result.style.display="none";
-
-}
-
-
-function closeDemo(){
-
-modal.classList.remove("show");
-
-}
-
-
-function runAI(){
-
-let text=input.value.trim();
-
-if(!text){
-
-result.innerText="Please enter a workflow.";
-
-result.style.display="block";
-
-return;
-
-}
-
-
-result.innerHTML=
-
-"<strong>MEDORA AI — Demo Intelligence</strong><br><br>"+
-
-"Workflow received:<br>"+
-
-text+
-
-"<br><br>"+
-
-"Suggested automation flow:<br>"+
-
-"① Capture request<br>"+
-
-"② Classify workflow priority<br>"+
-
-"③ Route to the appropriate team<br>"+
-
-"④ Track status<br>"+
-
-"⑤ Create follow-up task<br><br>"+
-
-"<span style='color:#94a3b8'>"+
-
-"Simulated intelligence only — not a medical decision."
-
-+"</span>";
-
-result.style.display="block";
-
-}
-
-
-/* BRANCH */
-
-document.getElementById("branch")
-.addEventListener("change",function(){
-
-addActivity(
-"Branch switched to "+this.value
-);
-
-});
-
-
-/* LIVE ACTIVITY */
-
-const events=[
-
-"AI workflow signal refreshed",
-"Operational dashboard synchronized",
-"New workflow event simulated",
-"Resource status check completed",
-"Command center activity updated"
-
-];
-
-
-function addActivity(message){
-
-const feed=document.getElementById("feed");
-
-const item=document.createElement("div");
-
-item.className="activityItem";
-
-item.innerHTML=
-
-"<span class='activityDot'></span>"+
-
-"<div><strong>"+message+
-
-"</strong><small>Just now • MEDORA AI</small></div>";
-
-feed.prepend(item);
-
-if(feed.children.length>6){
-
-feed.removeChild(feed.lastChild);
-
-}
-
-}
-
-
-setInterval(function(){
-
-const message=
-events[Math.floor(Math.random()*events.length)];
-
-addActivity(message);
-
-},7000);
-
-
-/* CLOSE MODAL ON BACKDROP */
-
-modal.addEventListener("click",function(e){
-
-if(e.target===modal){
-
-closeDemo();
-
-}
-
-});
-
-</script>
-
-</body>
- </html>
+    <div
