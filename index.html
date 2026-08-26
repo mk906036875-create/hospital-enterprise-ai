@@ -7,7 +7,7 @@
   <title>MEDORA AI | Executive Healthcare Command Center</title>
 
   <meta name="description"
-    content="MEDORA AI Executive Healthcare Command Center — interactive workflow automation demo.">
+    content="MEDORA AI - Premium AI-powered healthcare workflow automation concept demo.">
 
   <link rel="stylesheet" href="style.css">
 </head>
@@ -16,573 +16,225 @@
 
 <div class="app">
 
-  <!-- HEADER -->
+  <!-- ================= HEADER ================= -->
+
   <header class="topbar">
 
     <div class="brand">
-      <div class="brand-icon">✦</div>
+
+      <div class="brand-logo">
+        ✦
+      </div>
 
       <div>
         <h1>MEDORA <span>AI</span></h1>
         <p>Executive Healthcare Command Center</p>
       </div>
+
     </div>
 
-    <div class="header-right">
+    <div class="top-actions">
 
-      <div class="demo-label">
-        DEMO MODE
+      <div class="demo-pill">
+        <span class="live-dot"></span>
+        DEMO SYSTEM ONLINE
       </div>
 
-      <div class="system-status">
-        <span class="status-dot"></span>
-        SYSTEM ONLINE
-      </div>
+      <button class="contact-btn"
+        onclick="openWhatsApp()">
+        💬 Contact
+      </button>
 
     </div>
 
   </header>
 
 
-  <!-- NAVIGATION -->
-  <nav class="navigation">
+  <!-- ================= HERO ================= -->
 
-    <button class="nav-btn active" data-section="overview">
-      ◉ Overview
-    </button>
+  <section class="hero">
 
-    <button class="nav-btn" data-section="patients">
-      👥 Patients
-    </button>
+    <div class="hero-content">
 
-    <button class="nav-btn" data-section="operations">
-      ⚙ Operations
-    </button>
-
-    <button class="nav-btn" data-section="analytics">
-      📊 Analytics
-    </button>
-
-    <button class="nav-btn" data-section="ai">
-      ✦ AI Engine
-    </button>
-
-  </nav>
-
-
-  <main>
-
-    <!-- HERO -->
-    <section class="hero">
-
-      <div>
-
-        <div class="eyebrow">
-          INTELLIGENT HEALTHCARE OPERATIONS
-        </div>
-
-        <h2>
-          Command your hospital
-          <span>with intelligence.</span>
-        </h2>
-
-        <p>
-          A unified AI-assisted interface for monitoring workflows,
-          operational signals and hospital resources.
-        </p>
-
+      <div class="eyebrow">
+        ✦ NEXT-GENERATION HEALTHCARE AUTOMATION
       </div>
 
-      <div class="hero-control">
-
-        <label>FACILITY</label>
-
-        <select id="facility">
-
-          <option>Central Hospital</option>
-          <option>City Branch</option>
-          <option>North Branch</option>
-          <option>South Branch</option>
-
-        </select>
-
-      </div>
-
-    </section>
-
-
-    <!-- KPI -->
-    <section class="metrics">
-
-      <div class="metric">
-
-        <div class="metric-top">
-          <span>ACTIVE PATIENTS</span>
-          <b>↗</b>
-        </div>
-
-        <strong id="patients">1,284</strong>
-
-        <small class="success">
-          +8.4% today
-        </small>
-
-      </div>
-
-
-      <div class="metric">
-
-        <div class="metric-top">
-          <span>EMERGENCY CASES</span>
-          <b>!</b>
-        </div>
-
-        <strong id="emergency">07</strong>
-
-        <small class="danger">
-          2 high priority
-        </small>
-
-      </div>
-
-
-      <div class="metric">
-
-        <div class="metric-top">
-          <span>DOCTORS ONLINE</span>
-          <b>●</b>
-        </div>
-
-        <strong>86</strong>
-
-        <small class="success">
-          93% availability
-        </small>
-
-      </div>
-
-
-      <div class="metric">
-
-        <div class="metric-top">
-          <span>BEDS AVAILABLE</span>
-          <b>⌂</b>
-        </div>
-
-        <strong id="beds">18</strong>
-
-        <small class="warning">
-          Capacity monitored
-        </small>
-
-      </div>
-
-    </section>
-
-
-    <!-- DASHBOARD -->
-    <section class="dashboard-grid">
-
-
-      <!-- AI COMMAND -->
-      <div class="panel command-panel">
-
-        <div class="panel-heading">
-
-          <div>
-            <span class="section-tag">AI CORE</span>
-
-            <h3>MEDORA Intelligence Engine</h3>
-          </div>
-
-          <span class="live-badge">
-            LIVE
-          </span>
-
-        </div>
-
-
-        <div class="ai-center">
-
-          <div class="ai-ring">
-
-            <div class="ai-core">
-              ✦
-            </div>
-
-          </div>
-
-          <h3>Intelligence Active</h3>
-
-          <p>
-            Monitoring operational workflow signals
-          </p>
-
-        </div>
-
-
-        <div class="engine-status">
-
-          <div>
-            <strong>ACTIVE</strong>
-            <small>Workflow Engine</small>
-          </div>
-
-          <div>
-            <strong>READY</strong>
-            <small>Automation Layer</small>
-          </div>
-
-          <div>
-            <strong>ONLINE</strong>
-            <small>Command Layer</small>
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- PRIORITY -->
-      <div class="panel">
-
-        <div class="panel-heading">
-
-          <div>
-            <span class="section-tag">OPERATIONS</span>
-            <h3>Priority Monitor</h3>
-          </div>
-
-          <span class="muted">
-            SIMULATED
-          </span>
-
-        </div>
-
-
-        <div class="priority high-priority">
-
-          <div class="priority-icon">
-            🚑
-          </div>
-
-          <div class="priority-info">
-
-            <strong>Emergency Queue</strong>
-
-            <small>
-              2 cases require attention
-            </small>
-
-          </div>
-
-          <span class="priority-badge high">
-            HIGH
-          </span>
-
-        </div>
-
-
-        <div class="priority">
-
-          <div class="priority-icon">
-            📅
-          </div>
-
-          <div class="priority-info">
-
-            <strong>OPD Waiting</strong>
-
-            <small>
-              24 patients waiting
-            </small>
-
-          </div>
-
-          <span class="priority-badge medium">
-            MEDIUM
-          </span>
-
-        </div>
-
-
-        <div class="priority">
-
-          <div class="priority-icon">
-            🛏️
-          </div>
-
-          <div class="priority-info">
-
-            <strong>Bed Capacity</strong>
-
-            <small>
-              18 beds available
-            </small>
-
-          </div>
-
-          <span class="priority-badge normal">
-            NORMAL
-          </span>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- AI ACTIONS -->
-    <section class="panel actions-panel">
-
-      <div class="panel-heading">
-
-        <div>
-          <span class="section-tag">AUTOMATION</span>
-          <h3>AI Workflow Actions</h3>
-        </div>
-
-        <span class="muted">
-          INTERACTIVE DEMO
-        </span>
-
-      </div>
-
-
-      <div class="action-grid">
-
-        <button class="action-btn" data-action="Emergency Workflow">
-          <span>🚑</span>
-          Emergency
+      <h2>
+        Turn Hospital Operations
+        <span>Into Intelligence.</span>
+      </h2>
+
+      <p>
+        MEDORA AI brings workflow monitoring, operational intelligence
+        and automation into one executive command center.
+      </p>
+
+      <div class="hero-buttons">
+
+        <button class="primary-btn"
+          onclick="openWorkflow('AI Workflow Builder')">
+          ✦ Explore AI Workflow
         </button>
 
-        <button class="action-btn" data-action="OPD Workflow">
-          <span>📅</span>
-          OPD Queue
-        </button>
-
-        <button class="action-btn" data-action="Resource Monitoring">
-          <span>🛏️</span>
-          Resources
-        </button>
-
-        <button class="action-btn" data-action="Doctor Availability">
-          <span>👨‍⚕️</span>
-          Doctors
-        </button>
-
-        <button class="action-btn" data-action="Hospital Analytics">
-          <span>📊</span>
-          Analytics
-        </button>
-
-        <button class="action-btn" data-action="AI Workflow Builder">
-          <span>✦</span>
-          AI Builder
+        <button class="secondary-btn"
+          onclick="openWhatsApp()">
+          Talk to Us →
         </button>
 
       </div>
-
-    </section>
-
-
-    <!-- ACTIVITY + INSIGHTS -->
-    <section class="lower-grid">
-
-
-      <div class="panel">
-
-        <div class="panel-heading">
-
-          <div>
-            <span class="section-tag">SYSTEM FEED</span>
-            <h3>Live Activity</h3>
-          </div>
-
-          <span class="muted">
-            AUTO REFRESH
-          </span>
-
-        </div>
-
-        <div id="activityFeed">
-
-          <div class="activity">
-            <span></span>
-
-            <div>
-              <strong>
-                AI workflow signal detected
-              </strong>
-
-              <small>
-                Just now • MEDORA Engine
-              </small>
-            </div>
-          </div>
-
-
-          <div class="activity">
-            <span></span>
-
-            <div>
-              <strong>
-                Doctor availability synchronized
-              </strong>
-
-              <small>
-                2 minutes ago • Operations
-              </small>
-            </div>
-          </div>
-
-
-          <div class="activity">
-            <span></span>
-
-            <div>
-              <strong>
-                Resource status refreshed
-              </strong>
-
-              <small>
-                5 minutes ago • Command Center
-              </small>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- AI INSIGHT -->
-      <div class="panel insight-panel">
-
-        <span class="section-tag">
-          AI INSIGHT
-        </span>
-
-        <h3>
-          Operational Recommendation
-        </h3>
-
-        <p id="insight">
-          Current simulated signals indicate that emergency
-          queue monitoring should remain a priority.
-        </p>
-
-        <button class="primary-btn" id="insightBtn">
-          ✦ Generate AI Insight
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- CONTACT -->
-    <section class="contact-section">
-
-      <div>
-
-        <span class="section-tag">
-          REQUEST A DEMO
-        </span>
-
-        <h3>
-          Explore MEDORA AI for your organization.
-        </h3>
-
-        <p>
-          Connect directly for a product demonstration.
-        </p>
-
-      </div>
-
-
-      <div class="contact-buttons">
-
-        <a
-          class="contact-btn whatsapp"
-          href="https://wa.me/919919900020"
-          target="_blank"
-          rel="noopener"
-        >
-          💬 WhatsApp
-        </a>
-
-
-        <a
-          class="contact-btn email"
-          href="mailto:mk906036875@gmail.com?subject=MEDORA%20AI%20Demo"
-        >
-          ✉ Email
-        </a>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <footer>
-
-    <strong>MEDORA AI</strong>
-    • Executive Healthcare Intelligence Demo
-
-    <br>
-
-    © 2026 MEDORA AI • Concept / Demo Environment
-
-    <br>
-
-    ⚠️ This interface uses simulated data and is not a medical
-    diagnosis, treatment or emergency-response system.
-
-  </footer>
-
-</div>
-
-
-<!-- MODAL -->
-<div class="modal" id="modal">
-
-  <div class="modal-box">
-
-    <div class="modal-header">
-
-      <div>
-        <span class="section-tag">MEDORA AI</span>
-        <h3 id="modalTitle">
-          AI Workflow
-        </h3>
-      </div>
-
-      <button id="closeModal">×</button>
 
     </div>
 
 
-    <p class="modal-description">
-      Describe the workflow you want to explore.
-    </p>
+    <!-- AI CORE -->
+
+    <div class="ai-core">
+
+      <div class="core-ring ring-one"></div>
+      <div class="core-ring ring-two"></div>
+
+      <div class="core-center">
+        <div class="core-symbol">✦</div>
+        <strong>MEDORA</strong>
+        <small>AI CORE</small>
+      </div>
+
+      <div class="core-label label-one">
+        <b>86</b>
+        Doctors
+      </div>
+
+      <div class="core-label label-two">
+        <b>1.2K</b>
+        Patients
+      </div>
+
+      <div class="core-label label-three">
+        <b>18</b>
+        Beds
+      </div>
+
+    </div>
+
+  </section>
 
 
-    <textarea
-      id="workflowInput"
-      placeholder="Example: Automate follow-up for OPD patients..."
-    ></textarea>
+  <!-- ================= KPI ================= -->
+
+  <section class="kpi-grid">
+
+    <div class="kpi-card blue">
+
+      <div class="kpi-top">
+        <span>ACTIVE PATIENTS</span>
+        <i>👥</i>
+      </div>
+
+      <strong>1,284</strong>
+
+      <small class="up">
+        ↑ 8.4% today
+      </small>
+
+      <div class="progress">
+        <span style="width:78%"></span>
+      </div>
+
+    </div>
 
 
-    <button
-      class="primary-btn full"
-      id="runWorkflow"
-    >
-      ✦ Run MEDORA Simulation
-    </button>
+    <div class="kpi-card red">
+
+      <div class="kpi-top">
+        <span>EMERGENCY CASES</span>
+        <i>🚑</i>
+      </div>
+
+      <strong>07</strong>
+
+      <small class="danger">
+        2 high priority
+      </small>
+
+      <div class="progress">
+        <span style="width:42%"></span>
+      </div>
+
+    </div>
 
 
-    <div
+    <div class="kpi-card purple">
+
+      <div class="kpi-top">
+        <span>DOCTORS ONLINE</span>
+        <i>👨‍⚕️</i>
+      </div>
+
+      <strong>86</strong>
+
+      <small class="up">
+        93% availability
+      </small>
+
+      <div class="progress">
+        <span style="width:93%"></span>
+      </div>
+
+    </div>
+
+
+    <div class="kpi-card green">
+
+      <div class="kpi-top">
+        <span>BEDS AVAILABLE</span>
+        <i>🛏️</i>
+      </div>
+
+      <strong>18</strong>
+
+      <small class="warning">
+        Capacity monitoring
+      </small>
+
+      <div class="progress">
+        <span style="width:31%"></span>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= MAIN GRID ================= -->
+
+  <section class="main-grid">
+
+
+    <!-- AI ENGINE -->
+
+    <div class="panel ai-panel">
+
+      <div class="panel-header">
+
+        <div>
+          <span class="section-tag">
+            AI ENGINE
+          </span>
+
+          <h3>
+            MEDORA Intelligence
+          </h3>
+        </div>
+
+        <span class="status-badge">
+          ● ACTIVE
+        </span>
+
+      </div>
+
+
+      <div class="intelligence">
+
+        <div class="signal">
+          <span></span
