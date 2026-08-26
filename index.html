@@ -1,67 +1,1217 @@
  <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MedEnterprise AI - Hospital Operations & Patient Suite</title>
-    <!-- Connecting External CSS File -->
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>MEDORA AI | Hospital Intelligence Command Center</title>
+
+  <meta
+    name="description"
+    content="MEDORA AI Hospital Intelligence Command Center - AI workflow automation concept demo."
+  />
+
+  <style>
+    :root {
+      --bg: #06111f;
+      --panel: rgba(12, 28, 48, 0.78);
+      --panel-2: rgba(18, 39, 63, 0.72);
+      --border: rgba(125, 211, 252, 0.16);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --cyan: #22d3ee;
+      --green: #34d399;
+      --blue: #60a5fa;
+      --amber: #fbbf24;
+      --red: #fb7185;
+      --purple: #a78bfa;
+      --shadow: 0 25px 80px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family:
+        Inter, ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+      background:
+        radial-gradient(circle at 10% 0%, rgba(34,211,238,.12), transparent 28%),
+        radial-gradient(circle at 90% 10%, rgba(167,139,250,.12), transparent 25%),
+        linear-gradient(135deg, #040b15, #081827 55%, #07111e);
+
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .app {
+      width: min(1500px, 94%);
+      margin: 24px auto;
+    }
+
+    /* TOP BAR */
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+
+      padding: 18px 22px;
+
+      background: rgba(6, 17, 31, 0.78);
+      backdrop-filter: blur(18px);
+
+      border: 1px solid var(--border);
+      border-radius: 20px;
+
+      box-shadow: var(--shadow);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .brand-icon {
+      width: 48px;
+      height: 48px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 15px;
+
+      background:
+        linear-gradient(135deg, #0ea5e9, #14b8a6);
+
+      box-shadow:
+        0 0 30px rgba(34,211,238,.22);
+
+      font-size: 25px;
+    }
+
+    .brand h1 {
+      font-size: 21px;
+      letter-spacing: .5px;
+    }
+
+    .brand p {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .system-status {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+
+      padding: 9px 13px;
+
+      border-radius: 999px;
+
+      background: rgba(52,211,153,.08);
+      border: 1px solid rgba(52,211,153,.2);
+
+      color: #a7f3d0;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .online-dot {
+      width: 9px;
+      height: 9px;
+
+      border-radius: 50%;
+
+      background: var(--green);
+
+      box-shadow:
+        0 0 0 5px rgba(52,211,153,.08),
+        0 0 18px var(--green);
+    }
+
+    /* LAYOUT */
+
+    .layout {
+      display: grid;
+      grid-template-columns: 235px 1fr;
+      gap: 18px;
+
+      margin-top: 18px;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+
+      padding: 16px;
+
+      box-shadow: var(--shadow);
+    }
+
+    .nav-title {
+      color: #64748b;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      margin: 8px 10px 12px;
+      text-transform: uppercase;
+    }
+
+    .nav-btn {
+      width: 100%;
+
+      border: 1px solid transparent;
+      background: transparent;
+      color: #aebdce;
+
+      display: flex;
+      align-items: center;
+      gap: 11px;
+
+      padding: 12px;
+      border-radius: 12px;
+
+      margin-bottom: 5px;
+
+      text-align: left;
+      cursor: pointer;
+
+      transition: .2s;
+    }
+
+    .nav-btn:hover,
+    .nav-btn.active {
+      color: white;
+      background: rgba(34,211,238,.08);
+      border-color: rgba(34,211,238,.14);
+    }
+
+    .nav-icon {
+      width: 27px;
+      text-align: center;
+      font-size: 17px;
+    }
+
+    .sidebar-bottom {
+      margin-top: 25px;
+      padding: 14px;
+
+      border-radius: 15px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(34,211,238,.08),
+          rgba(167,139,250,.06)
+        );
+
+      border: 1px solid var(--border);
+    }
+
+    .sidebar-bottom small {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .sidebar-bottom strong {
+      display: block;
+      margin-top: 5px;
+      font-size: 14px;
+    }
+
+    /* MAIN */
+
+    .main {
+      min-width: 0;
+    }
+
+    .hero {
+      padding: 5px 3px 18px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+    }
+
+    .hero h2 {
+      font-size: clamp(24px, 3vw, 38px);
+      line-height: 1.05;
+    }
+
+    .hero h2 span {
+      color: var(--cyan);
+    }
+
+    .hero p {
+      color: var(--muted);
+      margin-top: 9px;
+      font-size: 13px;
+    }
+
+    .branch {
+      background: var(--panel);
+      border: 1px solid var(--border);
+
+      padding: 11px 13px;
+      border-radius: 12px;
+
+      color: white;
+      outline: none;
+    }
+
+    /* KPI */
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 13px;
+    }
+
+    .kpi {
+      background: var(--panel);
+      border: 1px solid var(--border);
+
+      border-radius: 17px;
+      padding: 18px;
+
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi::after {
+      content: "";
+
+      position: absolute;
+      right: -35px;
+      bottom: -45px;
+
+      width: 110px;
+      height: 110px;
+
+      border-radius: 50%;
+
+      background: rgba(34,211,238,.07);
+    }
+
+    .kpi-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .kpi-value {
+      font-size: 30px;
+      font-weight: 800;
+      margin-top: 7px;
+    }
+
+    .kpi-change {
+      margin-top: 5px;
+      font-size: 11px;
+    }
+
+    .positive {
+      color: var(--green);
+    }
+
+    .warning {
+      color: var(--amber);
+    }
+
+    .danger {
+      color: var(--red);
+    }
+
+    /* CONTENT GRID */
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 15px;
+
+      margin-top: 15px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+
+      border-radius: 19px;
+      padding: 18px;
+
+      box-shadow: var(--shadow);
+    }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      margin-bottom: 15px;
+    }
+
+    .panel-head h3 {
+      font-size: 15px;
+    }
+
+    .panel-head span {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    /* AI STATUS */
+
+    .ai-card {
+      min-height: 260px;
+
+      background:
+        radial-gradient(
+          circle at 80% 10%,
+          rgba(34,211,238,.12),
+          transparent 30%
+        ),
+        var(--panel);
+    }
+
+    .ai-orb {
+      width: 90px;
+      height: 90px;
+
+      margin: 10px auto 15px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(34,211,238,.55),
+          rgba(34,211,238,.08) 55%,
+          transparent 70%
+        );
+
+      border: 1px solid rgba(34,211,238,.3);
+
+      font-size: 35px;
+
+      animation: pulse 2.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% {
+        box-shadow: 0 0 0 0 rgba(34,211,238,.12);
+      }
+
+      50% {
+        box-shadow: 0 0 0 18px rgba(34,211,238,0);
+      }
+    }
+
+    .ai-title {
+      text-align: center;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .ai-sub {
+      text-align: center;
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 5px;
+    }
+
+    .ai-status-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+
+      margin-top: 20px;
+    }
+
+    .mini-status {
+      padding: 10px;
+      border-radius: 12px;
+
+      background: rgba(255,255,255,.035);
+      border: 1px solid rgba(255,255,255,.06);
+
+      text-align: center;
+    }
+
+    .mini-status strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .mini-status small {
+      color: var(--muted);
+      font-size: 9px;
+    }
+
+    /* PRIORITY */
+
+    .priority {
+      padding: 13px;
+
+      border-radius: 14px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      margin-bottom: 9px;
+
+      background: rgba(255,255,255,.035);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .priority:last-child {
+      margin-bottom: 0;
+    }
+
+    .priority-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .priority-icon {
+      width: 38px;
+      height: 38px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 11px;
+
+      background: rgba(255,255,255,.06);
+    }
+
+    .priority strong {
+      font-size: 12px;
+    }
+
+    .priority small {
+      display: block;
+      color: var(--muted);
+      margin-top: 3px;
+      font-size: 10px;
+    }
+
+    .level {
+      padding: 5px 8px;
+      border-radius: 999px;
+
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .high {
+      color: #fecdd3;
+      background: rgba(251,113,133,.12);
+    }
+
+    .medium {
+      color: #fde68a;
+      background: rgba(251,191,36,.12);
+    }
+
+    .normal {
+      color: #a7f3d0;
+      background: rgba(52,211,153,.12);
+    }
+
+    /* ACTIONS */
+
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 9px;
+
+      margin-top: 15px;
+    }
+
+    .action-btn {
+      padding: 14px 7px;
+
+      background: rgba(255,255,255,.035);
+      color: white;
+
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 13px;
+
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(34,211,238,.35);
+      background: rgba(34,211,238,.07);
+    }
+
+    .action-btn div {
+      font-size: 20px;
+    }
+
+    .action-btn span {
+      display: block;
+      margin-top: 6px;
+      font-size: 9px;
+      color: #cbd5e1;
+    }
+
+    /* ACTIVITY */
+
+    .activity {
+      margin-top: 15px;
+    }
+
+    .activity-item {
+      display: flex;
+      gap: 11px;
+
+      padding: 11px 0;
+
+      border-bottom: 1px solid rgba(255,255,255,.055);
+    }
+
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+
+    .activity-dot {
+      width: 8px;
+      height: 8px;
+
+      flex: 0 0 auto;
+
+      margin-top: 5px;
+
+      border-radius: 50%;
+      background: var(--cyan);
+
+      box-shadow: 0 0 12px rgba(34,211,238,.7);
+    }
+
+    .activity-item strong {
+      display: block;
+      font-size: 11px;
+    }
+
+    .activity-item small {
+      display: block;
+      color: var(--muted);
+      font-size: 9px;
+      margin-top: 3px;
+    }
+
+    /* DEMO MODAL */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+
+      display: none;
+      place-items: center;
+
+      background: rgba(0,0,0,.72);
+
+      z-index: 100;
+      padding: 20px;
+    }
+
+    .modal.show {
+      display: grid;
+    }
+
+    .modal-card {
+      width: min(520px, 100%);
+
+      background: #0a192b;
+      border: 1px solid var(--border);
+
+      border-radius: 20px;
+      padding: 22px;
+
+      box-shadow: 0 30px 100px rgba(0,0,0,.5);
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      margin-bottom: 15px;
+    }
+
+    .close {
+      background: transparent;
+      color: #94a3b8;
+      border: none;
+      font-size: 23px;
+      cursor: pointer;
+    }
+
+    .modal textarea {
+      width: 100%;
+      min-height: 120px;
+
+      resize: vertical;
+
+      padding: 13px;
+
+      border-radius: 12px;
+
+      background: #071423;
+      color: white;
+
+      border: 1px solid var(--border);
+      outline: none;
+    }
+
+    .run-ai {
+      width: 100%;
+
+      margin-top: 10px;
+
+      padding: 13px;
+
+      border: none;
+      border-radius: 12px;
+
+      color: white;
+
+      background:
+        linear-gradient(90deg, #0891b2, #6366f1);
+
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .result {
+      margin-top: 12px;
+
+      padding: 13px;
+
+      border-radius: 12px;
+
+      background: rgba(52,211,153,.07);
+      border: 1px solid rgba(52,211,153,.14);
+
+      color: #d1fae5;
+
+      font-size: 12px;
+
+      display: none;
+    }
+
+    /* FOOTER */
+
+    footer {
+      text-align: center;
+
+      color: #64748b;
+
+      font-size: 10px;
+
+      padding: 20px 5px;
+    }
+
+    footer strong {
+      color: #94a3b8;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 1050px) {
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: flex;
+        gap: 5px;
+        overflow-x: auto;
+      }
+
+      .nav-title,
+      .sidebar-bottom {
+        display: none;
+      }
+
+      .nav-btn {
+        min-width: max-content;
+      }
+
+    }
+
+    @media (max-width: 800px) {
+
+      .kpis {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .hero {
+        align-items: start;
+        flex-direction: column;
+      }
+
+    }
+
+    @media (max-width: 520px) {
+
+      .app {
+        width: 96%;
+        margin: 10px auto;
+      }
+
+      .topbar {
+        padding: 14px;
+      }
+
+      .brand h1 {
+        font-size: 17px;
+      }
+
+      .system-status {
+        font-size: 0;
+      }
+
+      .system-status .online-dot {
+        margin: 0;
+      }
+
+      .kpis {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .kpi {
+        padding: 14px;
+      }
+
+      .kpi-value {
+        font-size: 24px;
+      }
+
+      .actions {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .ai-status-row {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+  </style>
 </head>
+
 <body>
-    <header>
-        <div class="nav">
-            <h1 class="logo">MedEnterprise <span>AI</span></h1>
-            <a href="#contact" class="cta-btn">Book Enterprise Demo</a>
-        </div>
-    </header>
 
-    <section class="hero">
-        <span class="badge">Enterprise Healthcare Infrastructure</span>
-        <h1>Next-Gen AI Operating System for Modern Hospitals</h1>
-        <p>Scale your medical network, eliminate administrative bottlenecks, automate emergency triage, and deliver seamless 24/7 patient care across multiple branches.</p>
-        <a href="#contact" class="cta-btn">Request Boardroom Presentation</a>
-    </section>
+<div class="app">
 
-    <section class="features">
-        <div class="card">
-            <h3>🌐 Centralized OPD Grid</h3>
-            <p>Manage cross-branch doctor availability, patient queues, and real-time slot scheduling from a single master dashboard.</p>
+  <!-- TOP BAR -->
+
+  <header class="topbar">
+
+    <div class="brand">
+
+      <div class="brand-icon">
+        🏥
+      </div>
+
+      <div>
+
+        <h1>MEDORA AI</h1>
+
+        <p>
+          Hospital Intelligence Command Center
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="system-status">
+
+      <span class="online-dot"></span>
+
+      AI SYSTEM ONLINE
+
+    </div>
+
+  </header>
+
+
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+      <div class="nav-title">
+        Command Center
+      </div>
+
+      <button class="nav-btn active">
+        <span class="nav-icon">◉</span>
+        Overview
+      </button>
+
+      <button class="nav-btn">
+        <span class="nav-icon">👥</span>
+        Patients
+      </button>
+
+      <button class="nav-btn">
+        <span class="nav-icon">🚑</span>
+        Emergency
+      </button>
+
+      <button class="nav-btn">
+        <span class="nav-icon">📅</span>
+        OPD Queue
+      </button>
+
+      <button class="nav-btn">
+        <span class="nav-icon">👨‍⚕️</span>
+        Doctors
+      </button>
+
+      <button class="nav-btn">
+        <span class="nav-icon">🛏️</span>
+        Resources
+      </button>
+
+      <button class="nav-btn">
+        <span class="nav-icon">📊</span>
+        Analytics
+      </button>
+
+      <div class="sidebar-bottom">
+
+        <small>
+          DEMO ENVIRONMENT
+        </small>
+
+        <strong>
+          MEDORA AI v1.0
+        </strong>
+
+      </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+      <section class="hero">
+
+        <div>
+
+          <h2>
+            Hospital <span>Intelligence</span>
+          </h2>
+
+          <p>
+            One command center for AI-assisted healthcare workflows.
+          </p>
+
         </div>
-        <div class="card">
-            <h3>⚡ Emergency AI Triage</h3>
-            <p>Instant automated categorization of critical patient incoming requests with priority routing to specialized emergency units.</p>
+
+        <select class="branch" id="branchSelect">
+
+          <option>Central Hospital</option>
+          <option>City Branch</option>
+          <option>North Branch</option>
+          <option>South Branch</option>
+
+        </select>
+
+      </section>
+
+
+      <!-- KPIs -->
+
+      <section class="kpis">
+
+        <div class="kpi">
+
+          <div class="kpi-label">
+            ACTIVE PATIENTS
+          </div>
+
+          <div class="kpi-value">
+            1,284
+          </div>
+
+          <div class="kpi-change positive">
+            ↑ 8.4% today
+          </div>
+
         </div>
-        <div class="card">
-            <h3>🔒 HIPAA & Data Compliant</h3>
-            <p>Enterprise-grade security architecture protecting sensitive patient health records with encrypted cloud storage.</p>
+
+
+        <div class="kpi">
+
+          <div class="kpi-label">
+            EMERGENCY CASES
+          </div>
+
+          <div class="kpi-value">
+            07
+          </div>
+
+          <div class="kpi-change danger">
+            2 high priority
+          </div>
+
         </div>
-    </section>    <!-- High-Tech Developer & Project Creator Footer -->
-    <footer style="background-color: #0b0f19; border-top: 1px solid #1f2937; padding: 4rem 2rem; margin-top: 4rem; text-align: center;">
-        <div style="max-width: 600px; margin: 0 auto; background: #111827; border: 1px solid #374151; border-radius: 12px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-            
-            <span style="background: rgba(14, 165, 233, 0.1); color: #0ea5e9; font-size: 0.7rem; font-weight: 700; padding: 0.3rem 0.8rem; border-radius: 9999px; text-transform: uppercase; border: 1px solid rgba(14, 165, 233, 0.2);">Lead Enterprise Architect</span>
-            
-            <h3 style="color: #ffffff; font-size: 1.5rem; margin: 1rem 0 0.3rem 0; font-weight: 800;">मनीष तिवारी (Manish Tiwari)</h3>
-            <p style="color: #9ca3af; font-size: 0.9rem; margin-bottom: 1.5rem;">Enterprise AI & Automation Specialist</p>
-            
-            <div style="border-top: 1px solid #1f2937; padding-top: 1.2rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
-                <div>
-                    <span style="display: block; color: #4b5563; font-size: 0.75rem; text-transform: uppercase;">Direct Line</span>
-                    <a href="tel:9919900020" style="color: #0ea5e9; text-decoration: none; font-weight: 600; font-size: 0.95rem;">+91 99199 00020</a>
-                </div>
-                <div>
-                    <span style="display: block; color: #4b5563; font-size: 0.75rem; text-transform: uppercase;">Secure Email</span>
-                    <a href="mailto:mk906036875@gmail.com" style="color: #0ea5e9; text-decoration: none; font-weight: 600; font-size: 0.95rem;">mk906036875@gmail.com</a>
-                </div>
+
+
+        <div class="kpi">
+
+          <div class="kpi-label">
+            DOCTORS ONLINE
+          </div>
+
+          <div class="kpi-value">
+            86
+          </div>
+
+          <div class="kpi-change positive">
+            93% availability
+          </div>
+
+        </div>
+
+
+        <div class="kpi">
+
+          <div class="kpi-label">
+            BEDS AVAILABLE
+          </div>
+
+          <div class="kpi-value">
+            18
+          </div>
+
+          <div class="kpi-change warning">
+            Monitor capacity
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- MAIN CONTENT -->
+
+      <section class="content-grid">
+
+
+        <!-- AI -->
+
+        <div class="panel ai-card">
+
+          <div class="panel-head">
+
+            <h3>
+              🤖 AI Operations Engine
+            </h3>
+
+            <span>
+              LIVE DEMO
+            </span>
+
+          </div>
+
+
+          <div class="ai-orb">
+            ✦
+          </div>
+
+          <div class="ai-title">
+            MEDORA Intelligence Active
+          </div>
+
+          <div class="ai-sub">
+            Monitoring workflow signals and operational priorities
+          </div>
+
+
+          <div class="ai-status-row">
+
+            <div class="mini-status">
+
+              <strong class="positive">
+                ACTIVE
+              </strong>
+
+              <small>
+                Workflow Engine
+              </small>
+
             </div>
 
-        </div>
-        <p style="color: #4b5563; font-size: 0.8rem; margin-top: 2rem;">© 2026 MedEnterprise AI Solutions. Designed for Tier-1 Healthcare Networks.</p>
-    </footer>
- 
 
-    <footer>
-        <p>© 2026 MedEnterprise AI Solutions. Designed for Tier-1 Healthcare Networks.</p>
-    </footer>
-</body>
-</html>
+            <div class="mini-status">
+
+              <strong class="positive">
+                READY
+              </strong>
+
+              <small>
+                Lead Capture
+              </small>
+
+            </div>
+
+
+            <div class="mini-status">
+
+              <strong class="positive">
+                ONLINE
+              </strong>
+
+              <small>
+                Command Layer
+              </small>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- PRIORITY -->
+
+        <div class="panel">
+
+          <div class="panel-head">
+
+            <h3>
+              🚨 Priority Monitor
+            </h3>
+
+            <span>
+              DEMO DATA
+            </span>
+
+          </div>
+
+
+          <div class="priority">
+
+            <div class="priority-left">
+
+              <div class="priority-icon">
+                🚑
+              </div>
+
+              <div>
+
+                <strong>
+                  Emergency Queue
+                </strong>
+
+                <small>
+                  2 cases require attention
+                </small>
+
+              </div>
+
+            </div>
+
+            <span class="level high">
+              HIGH
+            </span>
+
+          </div>
+
+
+          <div class="priority">
+
+            <div class="priority-left">
+
+              <div class="priority-icon">
+                📅
+              </div>
+
+              <div>
+
+                <strong>
+                  OPD Waiting
+                </strong>
+
+                <small>
+                  24 patients
+                </small>
+
+              </div>
+
+            </div>
+
+            <span class="level medium">
+              MEDIUM
+            </span>
+
+          </div>
+
+
+          <div class="priority">
+
+            <div class="priority-left">
+
+              <div class="priority-icon">
+                🛏️
+              </div>
+
+              <div>
+
+                <strong>
+                  Bed Capacity
+                </strong>
+
+                <small>
+                  18 beds available
+                </small>
+
+              </div>
+
+            </div>
+
+            <span class="level normal">
+              NORMAL
