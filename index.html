@@ -1,1217 +1,1547 @@
  <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>MEDORA AI | Hospital Intelligence Command Center</title>
-
-  <meta
-    name="description"
-    content="MEDORA AI Hospital Intelligence Command Center - AI workflow automation concept demo."
-  />
-
-  <style>
-    :root {
-      --bg: #06111f;
-      --panel: rgba(12, 28, 48, 0.78);
-      --panel-2: rgba(18, 39, 63, 0.72);
-      --border: rgba(125, 211, 252, 0.16);
-      --text: #f1f5f9;
-      --muted: #94a3b8;
-      --cyan: #22d3ee;
-      --green: #34d399;
-      --blue: #60a5fa;
-      --amber: #fbbf24;
-      --red: #fb7185;
-      --purple: #a78bfa;
-      --shadow: 0 25px 80px rgba(0, 0, 0, 0.35);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family:
-        Inter, ui-sans-serif, system-ui, -apple-system,
-        BlinkMacSystemFont, "Segoe UI", sans-serif;
-
-      background:
-        radial-gradient(circle at 10% 0%, rgba(34,211,238,.12), transparent 28%),
-        radial-gradient(circle at 90% 10%, rgba(167,139,250,.12), transparent 25%),
-        linear-gradient(135deg, #040b15, #081827 55%, #07111e);
-
-      color: var(--text);
-      min-height: 100vh;
-    }
-
-    button {
-      font: inherit;
-    }
-
-    .app {
-      width: min(1500px, 94%);
-      margin: 24px auto;
-    }
-
-    /* TOP BAR */
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-
-      padding: 18px 22px;
-
-      background: rgba(6, 17, 31, 0.78);
-      backdrop-filter: blur(18px);
-
-      border: 1px solid var(--border);
-      border-radius: 20px;
-
-      box-shadow: var(--shadow);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-    }
-
-    .brand-icon {
-      width: 48px;
-      height: 48px;
-
-      display: grid;
-      place-items: center;
-
-      border-radius: 15px;
-
-      background:
-        linear-gradient(135deg, #0ea5e9, #14b8a6);
-
-      box-shadow:
-        0 0 30px rgba(34,211,238,.22);
-
-      font-size: 25px;
-    }
-
-    .brand h1 {
-      font-size: 21px;
-      letter-spacing: .5px;
-    }
-
-    .brand p {
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 3px;
-    }
-
-    .system-status {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-
-      padding: 9px 13px;
-
-      border-radius: 999px;
-
-      background: rgba(52,211,153,.08);
-      border: 1px solid rgba(52,211,153,.2);
-
-      color: #a7f3d0;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .online-dot {
-      width: 9px;
-      height: 9px;
-
-      border-radius: 50%;
-
-      background: var(--green);
-
-      box-shadow:
-        0 0 0 5px rgba(52,211,153,.08),
-        0 0 18px var(--green);
-    }
-
-    /* LAYOUT */
-
-    .layout {
-      display: grid;
-      grid-template-columns: 235px 1fr;
-      gap: 18px;
-
-      margin-top: 18px;
-    }
-
-    /* SIDEBAR */
-
-    .sidebar {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-
-      padding: 16px;
-
-      box-shadow: var(--shadow);
-    }
-
-    .nav-title {
-      color: #64748b;
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      margin: 8px 10px 12px;
-      text-transform: uppercase;
-    }
-
-    .nav-btn {
-      width: 100%;
-
-      border: 1px solid transparent;
-      background: transparent;
-      color: #aebdce;
-
-      display: flex;
-      align-items: center;
-      gap: 11px;
-
-      padding: 12px;
-      border-radius: 12px;
-
-      margin-bottom: 5px;
-
-      text-align: left;
-      cursor: pointer;
-
-      transition: .2s;
-    }
-
-    .nav-btn:hover,
-    .nav-btn.active {
-      color: white;
-      background: rgba(34,211,238,.08);
-      border-color: rgba(34,211,238,.14);
-    }
-
-    .nav-icon {
-      width: 27px;
-      text-align: center;
-      font-size: 17px;
-    }
-
-    .sidebar-bottom {
-      margin-top: 25px;
-      padding: 14px;
-
-      border-radius: 15px;
-
-      background:
-        linear-gradient(
-          135deg,
-          rgba(34,211,238,.08),
-          rgba(167,139,250,.06)
-        );
-
-      border: 1px solid var(--border);
-    }
-
-    .sidebar-bottom small {
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .sidebar-bottom strong {
-      display: block;
-      margin-top: 5px;
-      font-size: 14px;
-    }
-
-    /* MAIN */
-
-    .main {
-      min-width: 0;
-    }
-
-    .hero {
-      padding: 5px 3px 18px;
-
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 20px;
-    }
-
-    .hero h2 {
-      font-size: clamp(24px, 3vw, 38px);
-      line-height: 1.05;
-    }
-
-    .hero h2 span {
-      color: var(--cyan);
-    }
-
-    .hero p {
-      color: var(--muted);
-      margin-top: 9px;
-      font-size: 13px;
-    }
-
-    .branch {
-      background: var(--panel);
-      border: 1px solid var(--border);
-
-      padding: 11px 13px;
-      border-radius: 12px;
-
-      color: white;
-      outline: none;
-    }
-
-    /* KPI */
-
-    .kpis {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 13px;
-    }
-
-    .kpi {
-      background: var(--panel);
-      border: 1px solid var(--border);
-
-      border-radius: 17px;
-      padding: 18px;
-
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .kpi::after {
-      content: "";
-
-      position: absolute;
-      right: -35px;
-      bottom: -45px;
-
-      width: 110px;
-      height: 110px;
-
-      border-radius: 50%;
-
-      background: rgba(34,211,238,.07);
-    }
-
-    .kpi-label {
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 700;
-    }
-
-    .kpi-value {
-      font-size: 30px;
-      font-weight: 800;
-      margin-top: 7px;
-    }
-
-    .kpi-change {
-      margin-top: 5px;
-      font-size: 11px;
-    }
-
-    .positive {
-      color: var(--green);
-    }
-
-    .warning {
-      color: var(--amber);
-    }
-
-    .danger {
-      color: var(--red);
-    }
-
-    /* CONTENT GRID */
-
-    .content-grid {
-      display: grid;
-      grid-template-columns: 1.25fr .75fr;
-      gap: 15px;
-
-      margin-top: 15px;
-    }
-
-    .panel {
-      background: var(--panel);
-      border: 1px solid var(--border);
-
-      border-radius: 19px;
-      padding: 18px;
-
-      box-shadow: var(--shadow);
-    }
-
-    .panel-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      margin-bottom: 15px;
-    }
-
-    .panel-head h3 {
-      font-size: 15px;
-    }
-
-    .panel-head span {
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    /* AI STATUS */
-
-    .ai-card {
-      min-height: 260px;
-
-      background:
-        radial-gradient(
-          circle at 80% 10%,
-          rgba(34,211,238,.12),
-          transparent 30%
-        ),
-        var(--panel);
-    }
-
-    .ai-orb {
-      width: 90px;
-      height: 90px;
-
-      margin: 10px auto 15px;
-
-      display: grid;
-      place-items: center;
-
-      border-radius: 50%;
-
-      background:
-        radial-gradient(
-          circle,
-          rgba(34,211,238,.55),
-          rgba(34,211,238,.08) 55%,
-          transparent 70%
-        );
-
-      border: 1px solid rgba(34,211,238,.3);
-
-      font-size: 35px;
-
-      animation: pulse 2.5s infinite;
-    }
-
-    @keyframes pulse {
-      0%,100% {
-        box-shadow: 0 0 0 0 rgba(34,211,238,.12);
-      }
-
-      50% {
-        box-shadow: 0 0 0 18px rgba(34,211,238,0);
-      }
-    }
-
-    .ai-title {
-      text-align: center;
-      font-size: 17px;
-      font-weight: 800;
-    }
-
-    .ai-sub {
-      text-align: center;
-      color: var(--muted);
-      font-size: 11px;
-      margin-top: 5px;
-    }
-
-    .ai-status-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-
-      margin-top: 20px;
-    }
-
-    .mini-status {
-      padding: 10px;
-      border-radius: 12px;
-
-      background: rgba(255,255,255,.035);
-      border: 1px solid rgba(255,255,255,.06);
-
-      text-align: center;
-    }
-
-    .mini-status strong {
-      display: block;
-      font-size: 14px;
-    }
-
-    .mini-status small {
-      color: var(--muted);
-      font-size: 9px;
-    }
-
-    /* PRIORITY */
-
-    .priority {
-      padding: 13px;
-
-      border-radius: 14px;
-
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      margin-bottom: 9px;
-
-      background: rgba(255,255,255,.035);
-      border: 1px solid rgba(255,255,255,.06);
-    }
-
-    .priority:last-child {
-      margin-bottom: 0;
-    }
-
-    .priority-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .priority-icon {
-      width: 38px;
-      height: 38px;
-
-      display: grid;
-      place-items: center;
-
-      border-radius: 11px;
-
-      background: rgba(255,255,255,.06);
-    }
-
-    .priority strong {
-      font-size: 12px;
-    }
-
-    .priority small {
-      display: block;
-      color: var(--muted);
-      margin-top: 3px;
-      font-size: 10px;
-    }
-
-    .level {
-      padding: 5px 8px;
-      border-radius: 999px;
-
-      font-size: 9px;
-      font-weight: 800;
-    }
-
-    .high {
-      color: #fecdd3;
-      background: rgba(251,113,133,.12);
-    }
-
-    .medium {
-      color: #fde68a;
-      background: rgba(251,191,36,.12);
-    }
-
-    .normal {
-      color: #a7f3d0;
-      background: rgba(52,211,153,.12);
-    }
-
-    /* ACTIONS */
-
-    .actions {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 9px;
-
-      margin-top: 15px;
-    }
-
-    .action-btn {
-      padding: 14px 7px;
-
-      background: rgba(255,255,255,.035);
-      color: white;
-
-      border: 1px solid rgba(255,255,255,.07);
-      border-radius: 13px;
-
-      cursor: pointer;
-      transition: .2s;
-    }
-
-    .action-btn:hover {
-      transform: translateY(-2px);
-      border-color: rgba(34,211,238,.35);
-      background: rgba(34,211,238,.07);
-    }
-
-    .action-btn div {
-      font-size: 20px;
-    }
-
-    .action-btn span {
-      display: block;
-      margin-top: 6px;
-      font-size: 9px;
-      color: #cbd5e1;
-    }
-
-    /* ACTIVITY */
-
-    .activity {
-      margin-top: 15px;
-    }
-
-    .activity-item {
-      display: flex;
-      gap: 11px;
-
-      padding: 11px 0;
-
-      border-bottom: 1px solid rgba(255,255,255,.055);
-    }
-
-    .activity-item:last-child {
-      border-bottom: none;
-    }
-
-    .activity-dot {
-      width: 8px;
-      height: 8px;
-
-      flex: 0 0 auto;
-
-      margin-top: 5px;
-
-      border-radius: 50%;
-      background: var(--cyan);
-
-      box-shadow: 0 0 12px rgba(34,211,238,.7);
-    }
-
-    .activity-item strong {
-      display: block;
-      font-size: 11px;
-    }
-
-    .activity-item small {
-      display: block;
-      color: var(--muted);
-      font-size: 9px;
-      margin-top: 3px;
-    }
-
-    /* DEMO MODAL */
-
-    .modal {
-      position: fixed;
-      inset: 0;
-
-      display: none;
-      place-items: center;
-
-      background: rgba(0,0,0,.72);
-
-      z-index: 100;
-      padding: 20px;
-    }
-
-    .modal.show {
-      display: grid;
-    }
-
-    .modal-card {
-      width: min(520px, 100%);
-
-      background: #0a192b;
-      border: 1px solid var(--border);
-
-      border-radius: 20px;
-      padding: 22px;
-
-      box-shadow: 0 30px 100px rgba(0,0,0,.5);
-    }
-
-    .modal-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      margin-bottom: 15px;
-    }
-
-    .close {
-      background: transparent;
-      color: #94a3b8;
-      border: none;
-      font-size: 23px;
-      cursor: pointer;
-    }
-
-    .modal textarea {
-      width: 100%;
-      min-height: 120px;
-
-      resize: vertical;
-
-      padding: 13px;
-
-      border-radius: 12px;
-
-      background: #071423;
-      color: white;
-
-      border: 1px solid var(--border);
-      outline: none;
-    }
-
-    .run-ai {
-      width: 100%;
-
-      margin-top: 10px;
-
-      padding: 13px;
-
-      border: none;
-      border-radius: 12px;
-
-      color: white;
-
-      background:
-        linear-gradient(90deg, #0891b2, #6366f1);
-
-      cursor: pointer;
-      font-weight: 800;
-    }
-
-    .result {
-      margin-top: 12px;
-
-      padding: 13px;
-
-      border-radius: 12px;
-
-      background: rgba(52,211,153,.07);
-      border: 1px solid rgba(52,211,153,.14);
-
-      color: #d1fae5;
-
-      font-size: 12px;
-
-      display: none;
-    }
-
-    /* FOOTER */
-
-    footer {
-      text-align: center;
-
-      color: #64748b;
-
-      font-size: 10px;
-
-      padding: 20px 5px;
-    }
-
-    footer strong {
-      color: #94a3b8;
-    }
-
-    /* RESPONSIVE */
-
-    @media (max-width: 1050px) {
-
-      .layout {
-        grid-template-columns: 1fr;
-      }
-
-      .sidebar {
-        display: flex;
-        gap: 5px;
-        overflow-x: auto;
-      }
-
-      .nav-title,
-      .sidebar-bottom {
-        display: none;
-      }
-
-      .nav-btn {
-        min-width: max-content;
-      }
-
-    }
-
-    @media (max-width: 800px) {
-
-      .kpis {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .content-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .actions {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .hero {
-        align-items: start;
-        flex-direction: column;
-      }
-
-    }
-
-    @media (max-width: 520px) {
-
-      .app {
-        width: 96%;
-        margin: 10px auto;
-      }
-
-      .topbar {
-        padding: 14px;
-      }
-
-      .brand h1 {
-        font-size: 17px;
-      }
-
-      .system-status {
-        font-size: 0;
-      }
-
-      .system-status .online-dot {
-        margin: 0;
-      }
-
-      .kpis {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .kpi {
-        padding: 14px;
-      }
-
-      .kpi-value {
-        font-size: 24px;
-      }
-
-      .actions {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .ai-status-row {
-        grid-template-columns: 1fr;
-      }
-
-    }
-
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MEDORA AI | Hospital Intelligence Command Center</title>
+
+<meta name="description" content="MEDORA AI - Hospital Intelligence Command Center demo">
+
+<style>
+
+:root{
+--bg:#030712;
+--panel:rgba(15,23,42,.78);
+--panel2:rgba(15,30,50,.9);
+--line:rgba(148,163,184,.16);
+--text:#f8fafc;
+--muted:#94a3b8;
+--cyan:#22d3ee;
+--green:#34d399;
+--blue:#60a5fa;
+--purple:#a78bfa;
+--yellow:#facc15;
+--red:#fb7185;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Inter,Arial,sans-serif;
+background:
+radial-gradient(circle at 10% 0%,rgba(34,211,238,.14),transparent 25%),
+radial-gradient(circle at 90% 5%,rgba(167,139,250,.13),transparent 25%),
+linear-gradient(135deg,#020617,#071525,#020617);
+color:var(--text);
+min-height:100vh;
+}
+
+button,select,textarea{
+font-family:inherit;
+}
+
+.app{
+width:min(1450px,94%);
+margin:20px auto;
+}
+
+/* HEADER */
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 22px;
+border:1px solid var(--line);
+border-radius:22px;
+background:rgba(2,6,23,.76);
+backdrop-filter:blur(20px);
+box-shadow:0 25px 80px rgba(0,0,0,.35);
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:13px;
+}
+
+.logoIcon{
+width:52px;
+height:52px;
+display:grid;
+place-items:center;
+border-radius:16px;
+font-size:27px;
+background:linear-gradient(135deg,#0891b2,#2563eb,#7c3aed);
+box-shadow:0 0 35px rgba(34,211,238,.25);
+}
+
+.logo h1{
+font-size:22px;
+letter-spacing:.8px;
+}
+
+.logo p{
+font-size:11px;
+color:var(--muted);
+margin-top:4px;
+}
+
+.status{
+display:flex;
+align-items:center;
+gap:9px;
+padding:9px 14px;
+border-radius:50px;
+background:rgba(52,211,153,.08);
+border:1px solid rgba(52,211,153,.2);
+font-size:11px;
+font-weight:bold;
+color:#a7f3d0;
+}
+
+.dot{
+width:9px;
+height:9px;
+border-radius:50%;
+background:var(--green);
+box-shadow:0 0 16px var(--green);
+animation:blink 1.7s infinite;
+}
+
+@keyframes blink{
+50%{opacity:.35}
+}
+
+/* LAYOUT */
+
+.layout{
+display:grid;
+grid-template-columns:220px 1fr;
+gap:17px;
+margin-top:17px;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:20px;
+padding:15px;
+height:max-content;
+box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+
+.sideTitle{
+font-size:9px;
+color:#64748b;
+font-weight:bold;
+letter-spacing:1.5px;
+margin:7px 10px 12px;
+}
+
+.nav{
+width:100%;
+padding:12px;
+border-radius:12px;
+border:1px solid transparent;
+background:transparent;
+color:#aebdce;
+display:flex;
+align-items:center;
+gap:11px;
+cursor:pointer;
+text-align:left;
+margin-bottom:5px;
+transition:.2s;
+}
+
+.nav:hover,
+.nav.active{
+color:white;
+background:rgba(34,211,238,.08);
+border-color:rgba(34,211,238,.17);
+transform:translateX(2px);
+}
+
+.navIcon{
+width:25px;
+text-align:center;
+font-size:17px;
+}
+
+.demoBox{
+margin-top:22px;
+padding:14px;
+border-radius:15px;
+border:1px solid var(--line);
+background:linear-gradient(135deg,rgba(34,211,238,.08),rgba(167,139,250,.07));
+}
+
+.demoBox small{
+color:var(--muted);
+font-size:9px;
+}
+
+.demoBox strong{
+display:block;
+margin-top:5px;
+font-size:13px;
+}
+
+/* MAIN */
+
+.hero{
+display:flex;
+justify-content:space-between;
+align-items:end;
+gap:20px;
+padding:4px 2px 17px;
+}
+
+.hero h2{
+font-size:clamp(26px,3.5vw,42px);
+line-height:1;
+}
+
+.hero h2 span{
+color:var(--cyan);
+}
+
+.hero p{
+font-size:12px;
+color:var(--muted);
+margin-top:9px;
+}
+
+.branch{
+padding:11px 13px;
+border-radius:12px;
+background:var(--panel);
+border:1px solid var(--line);
+color:white;
+outline:none;
+}
+
+/* KPI */
+
+.kpis{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+}
+
+.card{
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:18px;
+box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+
+.kpi{
+padding:17px;
+position:relative;
+overflow:hidden;
+}
+
+.kpi:after{
+content:"";
+position:absolute;
+width:90px;
+height:90px;
+right:-35px;
+bottom:-35px;
+border-radius:50%;
+background:rgba(34,211,238,.06);
+}
+
+.label{
+font-size:10px;
+color:var(--muted);
+font-weight:bold;
+}
+
+.value{
+font-size:30px;
+font-weight:800;
+margin-top:6px;
+}
+
+.change{
+font-size:10px;
+margin-top:4px;
+}
+
+.green{color:var(--green)}
+.red{color:var(--red)}
+.yellow{color:var(--yellow)}
+.blue{color:var(--blue)}
+
+/* GRID */
+
+.grid{
+display:grid;
+grid-template-columns:1.2fr .8fr;
+gap:14px;
+margin-top:14px;
+}
+
+/* AI CARD */
+
+.ai{
+padding:19px;
+min-height:285px;
+background:
+radial-gradient(circle at 80% 0%,rgba(34,211,238,.12),transparent 35%),
+var(--panel);
+}
+
+.head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:14px;
+}
+
+.head h3{
+font-size:14px;
+}
+
+.head span{
+font-size:9px;
+color:var(--muted);
+}
+
+.orb{
+width:92px;
+height:92px;
+margin:16px auto;
+display:grid;
+place-items:center;
+border-radius:50%;
+font-size:36px;
+background:radial-gradient(circle,rgba(34,211,238,.55),rgba(34,211,238,.07) 58%,transparent 70%);
+border:1px solid rgba(34,211,238,.3);
+animation:pulse 2.5s infinite;
+}
+
+@keyframes pulse{
+50%{
+box-shadow:0 0 0 20px rgba(34,211,238,0);
+}
+}
+
+.aiTitle{
+text-align:center;
+font-size:17px;
+font-weight:800;
+}
+
+.aiSub{
+text-align:center;
+color:var(--muted);
+font-size:10px;
+margin-top:5px;
+}
+
+.mini{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+margin-top:19px;
+}
+
+.mini div{
+padding:10px;
+border-radius:11px;
+background:rgba(255,255,255,.035);
+border:1px solid rgba(255,255,255,.06);
+text-align:center;
+}
+
+.mini strong{
+display:block;
+font-size:12px;
+}
+
+.mini small{
+font-size:8px;
+color:var(--muted);
+}
+
+/* PRIORITY */
+
+.panel{
+padding:18px;
+}
+
+.priority{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:12px;
+border-radius:13px;
+background:rgba(255,255,255,.035);
+border:1px solid rgba(255,255,255,.06);
+margin-bottom:8px;
+}
+
+.priority:last-child{
+margin-bottom:0;
+}
+
+.priorityLeft{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.pIcon{
+width:37px;
+height:37px;
+display:grid;
+place-items:center;
+border-radius:10px;
+background:rgba(255,255,255,.06);
+}
+
+.priority strong{
+font-size:11px;
+}
+
+.priority small{
+display:block;
+font-size:9px;
+color:var(--muted);
+margin-top:3px;
+}
+
+.badge{
+padding:5px 8px;
+border-radius:50px;
+font-size:8px;
+font-weight:bold;
+}
+
+.high{
+background:rgba(251,113,133,.12);
+color:#fecdd3;
+}
+
+.medium{
+background:rgba(250,204,21,.1);
+color:#fde68a;
+}
+
+.normal{
+background:rgba(52,211,153,.1);
+color:#a7f3d0;
+}
+
+/* ACTIONS */
+
+.actions{
+margin-top:14px;
+padding:18px;
+}
+
+.actionGrid{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:9px;
+}
+
+.action{
+padding:14px 6px;
+border-radius:13px;
+background:rgba(255,255,255,.035);
+border:1px solid rgba(255,255,255,.07);
+color:white;
+cursor:pointer;
+transition:.2s;
+}
+
+.action:hover{
+transform:translateY(-3px);
+background:rgba(34,211,238,.08);
+border-color:rgba(34,211,238,.3);
+}
+
+.action div{
+font-size:21px;
+}
+
+.action span{
+display:block;
+font-size:9px;
+margin-top:6px;
+color:#cbd5e1;
+}
+
+/* ACTIVITY */
+
+.activity{
+margin-top:14px;
+padding:18px;
+}
+
+.activityItem{
+display:flex;
+gap:10px;
+padding:11px 0;
+border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.activityItem:last-child{
+border:none;
+}
+
+.activityDot{
+width:7px;
+height:7px;
+margin-top:5px;
+border-radius:50%;
+background:var(--cyan);
+box-shadow:0 0 12px var(--cyan);
+flex-shrink:0;
+}
+
+.activityItem strong{
+font-size:10px;
+}
+
+.activityItem small{
+display:block;
+color:var(--muted);
+font-size:8px;
+margin-top:3px;
+}
+
+/* CONTACT */
+
+.contact{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:14px;
+}
+
+.contact a{
+text-decoration:none;
+color:white;
+padding:15px;
+border-radius:15px;
+border:1px solid var(--line);
+background:var(--panel);
+display:flex;
+align-items:center;
+gap:10px;
+transition:.2s;
+}
+
+.contact a:hover{
+transform:translateY(-2px);
+border-color:rgba(34,211,238,.35);
+}
+
+.contactIcon{
+font-size:22px;
+}
+
+.contact small{
+display:block;
+color:var(--muted);
+font-size:8px;
+}
+
+.contact strong{
+font-size:11px;
+}
+
+/* MODAL */
+
+.modal{
+position:fixed;
+inset:0;
+display:none;
+place-items:center;
+padding:20px;
+background:rgba(0,0,0,.78);
+z-index:99;
+}
+
+.modal.show{
+display:grid;
+}
+
+.modalBox{
+width:min(520px,100%);
+background:#091525;
+border:1px solid var(--line);
+border-radius:20px;
+padding:20px;
+box-shadow:0 30px 100px rgba(0,0,0,.6);
+}
+
+.modalHead{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:13px;
+}
+
+.modalHead h3{
+font-size:16px;
+}
+
+.close{
+border:0;
+background:transparent;
+color:#94a3b8;
+font-size:24px;
+cursor:pointer;
+}
+
+textarea{
+width:100%;
+min-height:110px;
+resize:vertical;
+padding:12px;
+border-radius:12px;
+border:1px solid var(--line);
+background:#050d18;
+color:white;
+outline:none;
+}
+
+.run{
+width:100%;
+padding:13px;
+margin-top:9px;
+border:0;
+border-radius:12px;
+background:linear-gradient(90deg,#0891b2,#6366f1);
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+.result{
+display:none;
+margin-top:10px;
+padding:12px;
+border-radius:12px;
+background:rgba(52,211,153,.07);
+border:1px solid rgba(52,211,153,.15);
+font-size:11px;
+line-height:1.6;
+color:#d1fae5;
+}
+
+/* FOOTER */
+
+footer{
+text-align:center;
+padding:22px 5px;
+color:#64748b;
+font-size:9px;
+line-height:1.7;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+
+.layout{
+grid-template-columns:1fr;
+}
+
+.sidebar{
+display:flex;
+overflow-x:auto;
+gap:5px;
+}
+
+.sideTitle,
+.demoBox{
+display:none;
+}
+
+.nav{
+min-width:max-content;
+}
+
+}
+
+@media(max-width:780px){
+
+.kpis{
+grid-template-columns:1fr 1fr;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.actionGrid{
+grid-template-columns:repeat(3,1fr);
+}
+
+.hero{
+flex-direction:column;
+align-items:flex-start;
+}
+
+}
+
+@media(max-width:520px){
+
+.app{
+width:96%;
+margin:9px auto;
+}
+
+.header{
+padding:13px;
+}
+
+.logoIcon{
+width:44px;
+height:44px;
+font-size:23px;
+}
+
+.logo h1{
+font-size:17px;
+}
+
+.status{
+font-size:0;
+padding:10px;
+}
+
+.kpis{
+gap:8px;
+}
+
+.kpi{
+padding:13px;
+}
+
+.value{
+font-size:23px;
+}
+
+.actionGrid{
+grid-template-columns:1fr 1fr;
+}
+
+.contact{
+grid-template-columns:1fr;
+}
+
+.mini{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
 </head>
+
 
 <body>
 
 <div class="app">
 
-  <!-- TOP BAR -->
+<!-- HEADER -->
 
-  <header class="topbar">
+<header class="header">
 
-    <div class="brand">
+<div class="logo">
 
-      <div class="brand-icon">
-        🏥
-      </div>
+<div class="logoIcon">
+🏥
+</div>
 
-      <div>
+<div>
 
-        <h1>MEDORA AI</h1>
+<h1>MEDORA AI</h1>
 
-        <p>
-          Hospital Intelligence Command Center
-        </p>
+<p>Hospital Intelligence Command Center</p>
 
-      </div>
+</div>
 
-    </div>
+</div>
 
-    <div class="system-status">
+<div class="status">
+<span class="dot"></span>
+AI SYSTEM ONLINE
+</div>
 
-      <span class="online-dot"></span>
+</header>
 
-      AI SYSTEM ONLINE
 
-    </div>
+<div class="layout">
 
-  </header>
 
+<!-- SIDEBAR -->
 
-  <div class="layout">
+<aside class="sidebar">
 
-    <!-- SIDEBAR -->
+<div class="sideTitle">
+COMMAND CENTER
+</div>
 
-    <aside class="sidebar">
+<button class="nav active">
+<span class="navIcon">◉</span>
+Overview
+</button>
 
-      <div class="nav-title">
-        Command Center
-      </div>
+<button class="nav">
+<span class="navIcon">👥</span>
+Patients
+</button>
 
-      <button class="nav-btn active">
-        <span class="nav-icon">◉</span>
-        Overview
-      </button>
+<button class="nav">
+<span class="navIcon">🚑</span>
+Emergency
+</button>
 
-      <button class="nav-btn">
-        <span class="nav-icon">👥</span>
-        Patients
-      </button>
+<button class="nav">
+<span class="navIcon">📅</span>
+OPD Queue
+</button>
 
-      <button class="nav-btn">
-        <span class="nav-icon">🚑</span>
-        Emergency
-      </button>
+<button class="nav">
+<span class="navIcon">👨‍⚕️</span>
+Doctors
+</button>
 
-      <button class="nav-btn">
-        <span class="nav-icon">📅</span>
-        OPD Queue
-      </button>
+<button class="nav">
+<span class="navIcon">🛏️</span>
+Resources
+</button>
 
-      <button class="nav-btn">
-        <span class="nav-icon">👨‍⚕️</span>
-        Doctors
-      </button>
+<button class="nav">
+<span class="navIcon">📊</span>
+Analytics
+</button>
 
-      <button class="nav-btn">
-        <span class="nav-icon">🛏️</span>
-        Resources
-      </button>
+<div class="demoBox">
 
-      <button class="nav-btn">
-        <span class="nav-icon">📊</span>
-        Analytics
-      </button>
+<small>DEMO ENVIRONMENT</small>
 
-      <div class="sidebar-bottom">
+<strong>MEDORA AI v2.0</strong>
 
-        <small>
-          DEMO ENVIRONMENT
-        </small>
+</div>
 
-        <strong>
-          MEDORA AI v1.0
-        </strong>
+</aside>
 
-      </div>
 
-    </aside>
+<!-- MAIN -->
 
+<main>
 
-    <!-- MAIN -->
 
-    <main class="main">
+<section class="hero">
 
-      <section class="hero">
+<div>
 
-        <div>
+<h2>
+Hospital <span>Intelligence</span>
+</h2>
 
-          <h2>
-            Hospital <span>Intelligence</span>
-          </h2>
+<p>
+AI-assisted workflow automation for modern healthcare operations.
+</p>
 
-          <p>
-            One command center for AI-assisted healthcare workflows.
-          </p>
+</div>
 
-        </div>
+<select class="branch" id="branch">
 
-        <select class="branch" id="branchSelect">
+<option>Central Hospital</option>
+<option>City Branch</option>
+<option>North Branch</option>
+<option>South Branch</option>
 
-          <option>Central Hospital</option>
-          <option>City Branch</option>
-          <option>North Branch</option>
-          <option>South Branch</option>
+</select>
 
-        </select>
+</section>
 
-      </section>
 
+<!-- KPI -->
 
-      <!-- KPIs -->
+<section class="kpis">
 
-      <section class="kpis">
+<div class="card kpi">
 
-        <div class="kpi">
+<div class="label">
+ACTIVE PATIENTS
+</div>
 
-          <div class="kpi-label">
-            ACTIVE PATIENTS
-          </div>
+<div class="value">
+1,284
+</div>
 
-          <div class="kpi-value">
-            1,284
-          </div>
+<div class="change green">
+↑ 8.4% today
+</div>
 
-          <div class="kpi-change positive">
-            ↑ 8.4% today
-          </div>
+</div>
 
-        </div>
 
+<div class="card kpi">
 
-        <div class="kpi">
+<div class="label">
+EMERGENCY CASES
+</div>
 
-          <div class="kpi-label">
-            EMERGENCY CASES
-          </div>
+<div class="value">
+07
+</div>
 
-          <div class="kpi-value">
-            07
-          </div>
+<div class="change red">
+2 high priority
+</div>
 
-          <div class="kpi-change danger">
-            2 high priority
-          </div>
+</div>
 
-        </div>
 
+<div class="card kpi">
 
-        <div class="kpi">
+<div class="label">
+DOCTORS ONLINE
+</div>
 
-          <div class="kpi-label">
-            DOCTORS ONLINE
-          </div>
+<div class="value">
+86
+</div>
 
-          <div class="kpi-value">
-            86
-          </div>
+<div class="change green">
+93% availability
+</div>
 
-          <div class="kpi-change positive">
-            93% availability
-          </div>
+</div>
 
-        </div>
 
+<div class="card kpi">
 
-        <div class="kpi">
+<div class="label">
+BEDS AVAILABLE
+</div>
 
-          <div class="kpi-label">
-            BEDS AVAILABLE
-          </div>
+<div class="value">
+18
+</div>
 
-          <div class="kpi-value">
-            18
-          </div>
+<div class="change yellow">
+Monitor capacity
+</div>
 
-          <div class="kpi-change warning">
-            Monitor capacity
-          </div>
+</div>
 
-        </div>
+</section>
 
-      </section>
 
+<!-- GRID -->
 
-      <!-- MAIN CONTENT -->
+<section class="grid">
 
-      <section class="content-grid">
 
+<!-- AI ENGINE -->
 
-        <!-- AI -->
+<div class="card ai">
 
-        <div class="panel ai-card">
+<div class="head">
 
-          <div class="panel-head">
+<h3>
+🤖 AI Operations Engine
+</h3>
 
-            <h3>
-              🤖 AI Operations Engine
-            </h3>
+<span>
+LIVE DEMO
+</span>
 
-            <span>
-              LIVE DEMO
-            </span>
+</div>
 
-          </div>
 
+<div class="orb">
+✦
+</div>
 
-          <div class="ai-orb">
-            ✦
-          </div>
+<div class="aiTitle">
+MEDORA Intelligence Active
+</div>
 
-          <div class="ai-title">
-            MEDORA Intelligence Active
-          </div>
+<div class="aiSub">
+Monitoring workflow signals and operational priorities
+</div>
 
-          <div class="ai-sub">
-            Monitoring workflow signals and operational priorities
-          </div>
 
+<div class="mini">
 
-          <div class="ai-status-row">
+<div>
 
-            <div class="mini-status">
+<strong class="green">
+ACTIVE
+</strong>
 
-              <strong class="positive">
-                ACTIVE
-              </strong>
+<small>
+Workflow Engine
+</small>
 
-              <small>
-                Workflow Engine
-              </small>
+</div>
 
-            </div>
+<div>
 
+<strong class="green">
+READY
+</strong>
 
-            <div class="mini-status">
+<small>
+Lead Capture
+</small>
 
-              <strong class="positive">
-                READY
-              </strong>
+</div>
 
-              <small>
-                Lead Capture
-              </small>
+<div>
 
-            </div>
+<strong class="blue">
+ONLINE
+</strong>
 
+<small>
+Command Layer
+</small>
 
-            <div class="mini-status">
+</div>
 
-              <strong class="positive">
-                ONLINE
-              </strong>
+</div>
 
-              <small>
-                Command Layer
-              </small>
+</div>
 
-            </div>
 
-          </div>
+<!-- PRIORITY -->
 
-        </div>
+<div class="card panel">
 
+<div class="head">
 
-        <!-- PRIORITY -->
+<h3>
+🚨 Priority Monitor
+</h3>
 
-        <div class="panel">
+<span>
+DEMO DATA
+</span>
 
-          <div class="panel-head">
+</div>
 
-            <h3>
-              🚨 Priority Monitor
-            </h3>
 
-            <span>
-              DEMO DATA
-            </span>
+<div class="priority">
 
-          </div>
+<div class="priorityLeft">
 
+<div class="pIcon">
+🚑
+</div>
 
-          <div class="priority">
+<div>
 
-            <div class="priority-left">
+<strong>
+Emergency Queue
+</strong>
 
-              <div class="priority-icon">
-                🚑
-              </div>
+<small>
+2 cases require attention
+</small>
 
-              <div>
+</div>
 
-                <strong>
-                  Emergency Queue
-                </strong>
+</div>
 
-                <small>
-                  2 cases require attention
-                </small>
+<span class="badge high">
+HIGH
+</span>
 
-              </div>
+</div>
 
-            </div>
 
-            <span class="level high">
-              HIGH
-            </span>
+<div class="priority">
 
-          </div>
+<div class="priorityLeft">
 
+<div class="pIcon">
+📅
+</div>
 
-          <div class="priority">
+<div>
 
-            <div class="priority-left">
+<strong>
+OPD Waiting
+</strong>
 
-              <div class="priority-icon">
-                📅
-              </div>
+<small>
+24 patients
+</small>
 
-              <div>
+</div>
 
-                <strong>
-                  OPD Waiting
-                </strong>
+</div>
 
-                <small>
-                  24 patients
-                </small>
+<span class="badge medium">
+MEDIUM
+</span>
 
-              </div>
+</div>
 
-            </div>
 
-            <span class="level medium">
-              MEDIUM
-            </span>
+<div class="priority">
 
-          </div>
+<div class="priorityLeft">
 
+<div class="pIcon">
+🛏️
+</div>
 
-          <div class="priority">
+<div>
 
-            <div class="priority-left">
+<strong>
+Bed Capacity
+</strong>
 
-              <div class="priority-icon">
-                🛏️
-              </div>
+<small>
+18 beds available
+</small>
 
-              <div>
+</div>
 
-                <strong>
-                  Bed Capacity
-                </strong>
+</div>
 
-                <small>
-                  18 beds available
-                </small>
+<span class="badge normal">
+NORMAL
+</span>
 
-              </div>
+</div>
 
-            </div>
+</div>
 
-            <span class="level normal">
-              NORMAL
+</section>
+
+
+<!-- ACTIONS -->
+
+<section class="card actions">
+
+<div class="head">
+
+<h3>
+⚡ AI Actions
+</h3>
+
+<span>
+INTERACTIVE DEMO
+</span>
+
+</div>
+
+
+<div class="actionGrid">
+
+<button class="action" onclick="openDemo('Emergency Workflow')">
+<div>🚑</div>
+<span>Emergency</span>
+</button>
+
+<button class="action" onclick="openDemo('OPD Queue')">
+<div>📅</div>
+<span>OPD Queue</span>
+</button>
+
+<button class="action" onclick="openDemo('Resource Monitor')">
+<div>🛏️</div>
+<span>Resources</span>
+</button>
+
+<button class="action" onclick="openDemo('Doctor Availability')">
+<div>👨‍⚕️</div>
+<span>Doctors</span>
+</button>
+
+<button class="action" onclick="openDemo('Hospital Analytics')">
+<div>📊</div>
+<span>Analytics</span>
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ACTIVITY -->
+
+<section class="card activity">
+
+<div class="head">
+
+<h3>
+🔔 Live Activity
+</h3>
+
+<span>
+SIMULATED FEED
+</span>
+
+</div>
+
+
+<div id="feed">
+
+<div class="activityItem">
+
+<span class="activityDot"></span>
+
+<div>
+
+<strong>
+New OPD workflow request detected
+</strong>
+
+<small>
+Just now • Central Hospital
+</small>
+
+</div>
+
+</div>
+
+
+<div class="activityItem">
+
+<span class="activityDot"></span>
+
+<div>
+
+<strong>
+Doctor availability updated
+</strong>
+
+<small>
+2 minutes ago • Cardiology
+</small>
+
+</div>
+
+</div>
+
+
+<div class="activityItem">
+
+<span class="activityDot"></span>
+
+<div>
+
+<strong>
+Resource status refreshed
+</strong>
+
+<small>
+5 minutes ago • Operations
+</small>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CONTACT -->
+
+<section class="contact">
+
+<a href="https://wa.me/919919900020" target="_blank">
+
+<div class="contactIcon">
+💬
+</div>
+
+<div>
+
+<small>WHATSAPP</small>
+
+<strong>
+Chat for a Demo
+</strong>
+
+</div>
+
+</a>
+
+
+<a href="mailto:mk906036875@gmail.com?subject=MEDORA%20AI%20Demo">
+
+<div class="contactIcon">
+✉️
+</div>
+
+<div>
+
+<small>EMAIL</small>
+
+<strong>
+mk906036875@gmail.com
+</strong>
+
+</div>
+
+</a>
+
+</section>
+
+
+<footer>
+
+<strong>MEDORA AI</strong>
+• Hospital workflow automation concept demo.
+
+<br>
+
+© 2026 MEDORA AI • Built for demonstration purposes.
+
+<br>
+
+⚠️ This interface is a concept/demo only. It is not a medical diagnosis,
+treatment or emergency-response system.
+
+</footer>
+
+
+</main>
+
+</div>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+<div class="modalBox">
+
+<div class="modalHead">
+
+<h3 id="modalTitle">
+✦ AI Workflow
+</h3>
+
+<button class="close" onclick="closeDemo()">
+×
+</button>
+
+</div>
+
+
+<textarea id="input"
+placeholder="Describe a workflow you want to explore..."></textarea>
+
+
+<button class="run" onclick="runAI()">
+✦ Run MEDORA Demo Intelligence
+</button>
+
+
+<div class="result" id="result"></div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* NAVIGATION */
+
+document.querySelectorAll(".nav").forEach(function(btn){
+
+btn.addEventListener("click",function(){
+
+document.querySelectorAll(".nav")
+.forEach(function(item){
+item.classList.remove("active");
+});
+
+btn.classList.add("active");
+
+});
+
+});
+
+
+/* MODAL */
+
+const modal=document.getElementById("modal");
+
+const modalTitle=document.getElementById("modalTitle");
+
+const input=document.getElementById("input");
+
+const result=document.getElementById("result");
+
+
+function openDemo(type){
+
+modal.classList.add("show");
+
+modalTitle.innerText="✦ "+type+" — AI Demo";
+
+input.value="Explore "+type+" workflow for a hospital.";
+
+result.style.display="none";
+
+}
+
+
+function closeDemo(){
+
+modal.classList.remove("show");
+
+}
+
+
+function runAI(){
+
+let text=input.value.trim();
+
+if(!text){
+
+result.innerText="Please enter a workflow.";
+
+result.style.display="block";
+
+return;
+
+}
+
+
+result.innerHTML=
+
+"<strong>MEDORA AI — Demo Intelligence</strong><br><br>"+
+
+"Workflow received:<br>"+
+
+text+
+
+"<br><br>"+
+
+"Suggested automation flow:<br>"+
+
+"① Capture request<br>"+
+
+"② Classify workflow priority<br>"+
+
+"③ Route to the appropriate team<br>"+
+
+"④ Track status<br>"+
+
+"⑤ Create follow-up task<br><br>"+
+
+"<span style='color:#94a3b8'>"+
+
+"Simulated intelligence only — not a medical decision."
+
++"</span>";
+
+result.style.display="block";
+
+}
+
+
+/* BRANCH */
+
+document.getElementById("branch")
+.addEventListener("change",function(){
+
+addActivity(
+"Branch switched to "+this.value
+);
+
+});
+
+
+/* LIVE ACTIVITY */
+
+const events=[
+
+"AI workflow signal refreshed",
+"Operational dashboard synchronized",
+"New workflow event simulated",
+"Resource status check completed",
+"Command center activity updated"
+
+];
+
+
+function addActivity(message){
+
+const feed=document.getElementById("feed");
+
+const item=document.createElement("div");
+
+item.className="activityItem";
+
+item.innerHTML=
+
+"<span class='activityDot'></span>"+
+
+"<div><strong>"+message+
+
+"</strong><small>Just now • MEDORA AI</small></div>";
+
+feed.prepend(item);
+
+if(feed.children.length>6){
+
+feed.removeChild(feed.lastChild);
+
+}
+
+}
+
+
+setInterval(function(){
+
+const message=
+events[Math.floor(Math.random()*events.length)];
+
+addActivity(message);
+
+},7000);
+
+
+/* CLOSE MODAL ON BACKDROP */
+
+modal.addEventListener("click",function(e){
+
+if(e.target===modal){
+
+closeDemo();
+
+}
+
+});
+
+</script>
+
+</body>
+ </html>
