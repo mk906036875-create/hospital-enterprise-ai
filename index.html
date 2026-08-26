@@ -4,32 +4,32 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MEDORA AI | Healthcare Intelligence Command Center</title>
+<title>MEDORA AI | Healthcare Intelligence</title>
 
 <meta name="description"
-content="MEDORA AI Premium Healthcare Intelligence Command Center Demo">
+content="MEDORA AI Premium Healthcare Intelligence Command Center demo.">
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
 :root{
   --bg:#020617;
-  --panel:rgba(10,20,40,.76);
-  --panel2:rgba(15,30,55,.88);
+  --panel:rgba(9,20,39,.78);
+  --panel2:#0b1930;
   --line:rgba(148,163,184,.16);
-  --white:#f8fafc;
+  --text:#f8fafc;
   --muted:#94a3b8;
   --cyan:#22d3ee;
   --blue:#3b82f6;
   --purple:#8b5cf6;
-  --pink:#ec4899;
   --green:#34d399;
   --yellow:#facc15;
   --red:#fb7185;
+  --shadow:0 25px 80px rgba(0,0,0,.42);
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
 html{
@@ -38,29 +38,27 @@ html{
 
 body{
   min-height:100vh;
-  font-family:Inter,Arial,sans-serif;
-  color:var(--white);
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  color:var(--text);
   background:
-    radial-gradient(circle at 10% 5%,rgba(34,211,238,.18),transparent 25%),
-    radial-gradient(circle at 90% 10%,rgba(139,92,246,.18),transparent 25%),
-    radial-gradient(circle at 50% 100%,rgba(236,72,153,.08),transparent 30%),
-    linear-gradient(135deg,#01030a,#061426,#020617);
+    radial-gradient(circle at 5% 0%,rgba(34,211,238,.16),transparent 25%),
+    radial-gradient(circle at 95% 5%,rgba(139,92,246,.18),transparent 27%),
+    radial-gradient(circle at 50% 100%,rgba(59,130,246,.12),transparent 30%),
+    linear-gradient(135deg,#01030a,#06152b 50%,#020617);
   overflow-x:hidden;
 }
 
-button,
-select,
-textarea{
+button,input,textarea,select{
   font:inherit;
 }
 
 button{
-  -webkit-tap-highlight-color:transparent;
+  cursor:pointer;
 }
 
 .app{
-  width:min(1450px,94%);
-  margin:20px auto;
+  width:min(1480px,94%);
+  margin:18px auto;
 }
 
 /* HEADER */
@@ -70,54 +68,51 @@ button{
   justify-content:space-between;
   align-items:center;
   gap:15px;
-  padding:18px 22px;
+  padding:17px 20px;
   border:1px solid var(--line);
-  border-radius:24px;
-  background:rgba(2,6,23,.72);
-  backdrop-filter:blur(20px);
-  box-shadow:0 25px 90px rgba(0,0,0,.4);
+  border-radius:22px;
+  background:rgba(2,6,23,.76);
+  backdrop-filter:blur(22px);
+  box-shadow:var(--shadow);
 }
 
-.logo{
+.brand{
   display:flex;
   align-items:center;
   gap:13px;
 }
 
-.logoIcon{
-  width:54px;
-  height:54px;
+.logo{
+  width:52px;
+  height:52px;
   display:grid;
   place-items:center;
-  border-radius:17px;
-  font-size:28px;
-  background:
-    linear-gradient(135deg,#06b6d4,#2563eb,#8b5cf6,#ec4899);
-  box-shadow:
-    0 0 30px rgba(34,211,238,.25),
-    0 0 50px rgba(139,92,246,.12);
+  border-radius:16px;
+  font-size:27px;
+  background:linear-gradient(135deg,#06b6d4,#2563eb,#7c3aed);
+  box-shadow:0 0 35px rgba(34,211,238,.28);
 }
 
-.logo h1{
-  font-size:23px;
-  letter-spacing:1px;
+.brand h1{
+  font-size:22px;
+  letter-spacing:.8px;
 }
 
-.logo p{
-  margin-top:3px;
+.brand p{
   color:var(--muted);
   font-size:11px;
+  margin-top:3px;
 }
 
 .status{
   display:flex;
   align-items:center;
   gap:9px;
-  padding:10px 15px;
+  padding:9px 13px;
   border-radius:50px;
-  border:1px solid rgba(52,211,153,.22);
-  background:rgba(52,211,153,.07);
   color:#a7f3d0;
+  background:rgba(52,211,153,.08);
+  border:1px solid rgba(52,211,153,.2);
   font-size:10px;
   font-weight:800;
 }
@@ -127,12 +122,12 @@ button{
   height:9px;
   border-radius:50%;
   background:var(--green);
-  box-shadow:0 0 18px var(--green);
-  animation:blink 1.6s infinite;
+  box-shadow:0 0 17px var(--green);
+  animation:blink 1.5s infinite;
 }
 
 @keyframes blink{
-  50%{opacity:.3}
+  50%{opacity:.35}
 }
 
 /* LAYOUT */
@@ -140,55 +135,47 @@ button{
 .layout{
   display:grid;
   grid-template-columns:220px 1fr;
-  gap:17px;
-  margin-top:17px;
+  gap:16px;
+  margin-top:16px;
 }
-
-/* SIDEBAR */
 
 .sidebar{
   height:max-content;
-  padding:15px;
+  padding:14px;
   border:1px solid var(--line);
-  border-radius:21px;
+  border-radius:20px;
   background:var(--panel);
-  box-shadow:0 20px 70px rgba(0,0,0,.3);
+  box-shadow:var(--shadow);
 }
 
 .sideTitle{
-  margin:7px 10px 12px;
   color:#64748b;
   font-size:9px;
   font-weight:800;
-  letter-spacing:1.6px;
+  letter-spacing:1.5px;
+  margin:7px 10px 12px;
 }
 
 .nav{
   width:100%;
   display:flex;
   align-items:center;
-  gap:11px;
-  margin-bottom:5px;
+  gap:10px;
   padding:12px;
+  margin-bottom:5px;
   border:1px solid transparent;
-  border-radius:13px;
+  border-radius:12px;
   background:transparent;
   color:#aebdce;
   text-align:left;
-  cursor:pointer;
-  transition:.25s;
+  transition:.2s;
 }
 
 .nav:hover,
 .nav.active{
-  color:#fff;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(34,211,238,.12),
-      rgba(139,92,246,.08)
-    );
-  border-color:rgba(34,211,238,.2);
+  color:white;
+  background:rgba(34,211,238,.08);
+  border-color:rgba(34,211,238,.18);
   transform:translateX(2px);
 }
 
@@ -203,18 +190,12 @@ button{
   padding:14px;
   border-radius:15px;
   border:1px solid var(--line);
-  background:
-    linear-gradient(
-      135deg,
-      rgba(34,211,238,.09),
-      rgba(139,92,246,.08),
-      rgba(236,72,153,.05)
-    );
+  background:linear-gradient(135deg,rgba(34,211,238,.08),rgba(139,92,246,.08));
 }
 
 .demoBox small{
   color:var(--muted);
-  font-size:9px;
+  font-size:8px;
 }
 
 .demoBox strong{
@@ -228,15 +209,14 @@ button{
 .hero{
   display:flex;
   justify-content:space-between;
-  align-items:end;
+  align-items:flex-end;
   gap:20px;
-  padding:5px 2px 17px;
+  padding:4px 2px 17px;
 }
 
 .hero h2{
-  font-size:clamp(28px,4vw,45px);
+  font-size:clamp(27px,3.5vw,43px);
   line-height:1;
-  letter-spacing:-1.5px;
 }
 
 .hero h2 span{
@@ -244,28 +224,44 @@ button{
 }
 
 .hero p{
-  margin-top:9px;
   color:var(--muted);
   font-size:12px;
+  margin-top:9px;
 }
 
 .branch{
   padding:11px 13px;
-  border:1px solid var(--line);
   border-radius:12px;
-  outline:none;
+  border:1px solid var(--line);
   background:var(--panel);
   color:white;
+  outline:none;
 }
 
-/* COMMON CARD */
+/* COMMON */
 
 .card{
   border:1px solid var(--line);
-  border-radius:20px;
+  border-radius:19px;
   background:var(--panel);
-  box-shadow:0 20px 70px rgba(0,0,0,.27);
-  backdrop-filter:blur(15px);
+  box-shadow:var(--shadow);
+}
+
+.head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:14px;
+}
+
+.head h3{
+  font-size:14px;
+}
+
+.head span{
+  color:var(--muted);
+  font-size:8px;
 }
 
 /* KPI */
@@ -273,42 +269,1000 @@ button{
 .kpis{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:12px;
+  gap:11px;
 }
 
 .kpi{
+  padding:17px;
   position:relative;
   overflow:hidden;
-  padding:18px;
-  transition:.25s;
-}
-
-.kpi:hover{
-  transform:translateY(-3px);
-  border-color:rgba(34,211,238,.25);
-}
-
-.kpi:before{
-  content:"";
-  position:absolute;
-  left:0;
-  top:0;
-  width:45%;
-  height:2px;
-  background:linear-gradient(90deg,var(--cyan),var(--purple),transparent);
 }
 
 .kpi:after{
   content:"";
   position:absolute;
-  right:-40px;
-  bottom:-40px;
-  width:110px;
-  height:110px;
+  width:100px;
+  height:100px;
+  right:-45px;
+  bottom:-45px;
   border-radius:50%;
   background:rgba(34,211,238,.07);
 }
 
 .label{
   color:var(--muted);
-  font-size:10
+  font-size:9px;
+  font-weight:800;
+}
+
+.value{
+  font-size:30px;
+  font-weight:900;
+  margin-top:6px;
+}
+
+.change{
+  font-size:10px;
+  margin-top:4px;
+}
+
+.green{color:var(--green)}
+.red{color:var(--red)}
+.yellow{color:var(--yellow)}
+.blue{color:var(--blue)}
+
+/* MAIN GRID */
+
+.grid{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:14px;
+  margin-top:14px;
+}
+
+/* AI */
+
+.ai{
+  min-height:285px;
+  padding:19px;
+  background:
+    radial-gradient(circle at 80% 0%,rgba(34,211,238,.14),transparent 35%),
+    var(--panel);
+}
+
+.orb{
+  width:92px;
+  height:92px;
+  margin:17px auto 14px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  font-size:35px;
+  background:
+    radial-gradient(circle,rgba(34,211,238,.6),rgba(34,211,238,.08) 58%,transparent 70%);
+  border:1px solid rgba(34,211,238,.3);
+  animation:pulse 2.5s infinite;
+}
+
+@keyframes pulse{
+  50%{
+    box-shadow:0 0 0 20px rgba(34,211,238,0);
+  }
+}
+
+.aiTitle{
+  text-align:center;
+  font-size:17px;
+  font-weight:900;
+}
+
+.aiSub{
+  text-align:center;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:5px;
+}
+
+.mini{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-top:19px;
+}
+
+.mini div{
+  padding:10px;
+  text-align:center;
+  border-radius:11px;
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.06);
+}
+
+.mini strong{
+  display:block;
+  font-size:12px;
+}
+
+.mini small{
+  color:var(--muted);
+  font-size:8px;
+}
+
+/* PRIORITY */
+
+.panel{
+  padding:18px;
+}
+
+.priority{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px;
+  margin-bottom:8px;
+  border-radius:13px;
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.06);
+}
+
+.priority:last-child{
+  margin-bottom:0;
+}
+
+.priorityLeft{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.pIcon{
+  width:37px;
+  height:37px;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  background:rgba(255,255,255,.06);
+}
+
+.priority strong{
+  font-size:11px;
+}
+
+.priority small{
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+  margin-top:3px;
+}
+
+.badge{
+  padding:5px 8px;
+  border-radius:50px;
+  font-size:8px;
+  font-weight:900;
+}
+
+.high{
+  color:#fecdd3;
+  background:rgba(251,113,133,.12);
+}
+
+.medium{
+  color:#fde68a;
+  background:rgba(250,204,21,.1);
+}
+
+.normal{
+  color:#a7f3d0;
+  background:rgba(52,211,153,.1);
+}
+
+/* ACTIONS */
+
+.actions{
+  padding:18px;
+  margin-top:14px;
+}
+
+.actionGrid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:9px;
+}
+
+.action{
+  padding:14px 5px;
+  color:white;
+  border-radius:13px;
+  border:1px solid rgba(255,255,255,.07);
+  background:rgba(255,255,255,.035);
+  transition:.2s;
+}
+
+.action:hover{
+  transform:translateY(-3px);
+  background:rgba(34,211,238,.09);
+  border-color:rgba(34,211,238,.32);
+  box-shadow:0 10px 30px rgba(34,211,238,.08);
+}
+
+.action div{
+  font-size:21px;
+}
+
+.action span{
+  display:block;
+  color:#cbd5e1;
+  font-size:9px;
+  margin-top:6px;
+}
+
+/* BUILDER */
+
+.builder{
+  margin-top:14px;
+  padding:18px;
+}
+
+.builderBox{
+  display:grid;
+  grid-template-columns:1fr 150px;
+  gap:10px;
+}
+
+.builder textarea{
+  width:100%;
+  min-height:95px;
+  resize:vertical;
+  padding:13px;
+  color:white;
+  background:#040b16;
+  border:1px solid var(--line);
+  border-radius:13px;
+  outline:none;
+}
+
+.builder textarea:focus{
+  border-color:rgba(34,211,238,.45);
+}
+
+.generate{
+  align-self:stretch;
+  border:0;
+  border-radius:13px;
+  color:white;
+  font-weight:900;
+  background:linear-gradient(135deg,#0891b2,#2563eb,#7c3aed);
+  box-shadow:0 10px 35px rgba(37,99,235,.2);
+  transition:.2s;
+}
+
+.generate:hover{
+  transform:translateY(-2px);
+}
+
+/* RESULT */
+
+.aiResult{
+  display:none;
+  margin-top:12px;
+  padding:14px;
+  border-radius:13px;
+  background:rgba(34,211,238,.055);
+  border:1px solid rgba(34,211,238,.15);
+  color:#dffcff;
+  font-size:11px;
+  line-height:1.7;
+}
+
+/* ACTIVITY */
+
+.activity{
+  padding:18px;
+  margin-top:14px;
+}
+
+.activityItem{
+  display:flex;
+  gap:10px;
+  padding:11px 0;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.activityItem:last-child{
+  border-bottom:0;
+}
+
+.activityDot{
+  width:7px;
+  height:7px;
+  margin-top:5px;
+  flex-shrink:0;
+  border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 12px var(--cyan);
+}
+
+.activityItem strong{
+  display:block;
+  font-size:10px;
+}
+
+.activityItem small{
+  display:block;
+  color:var(--muted);
+  font-size:8px;
+  margin-top:3px;
+}
+
+/* CONTACT */
+
+.contact{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:14px;
+}
+
+.contact a{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:15px;
+  color:white;
+  text-decoration:none;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:var(--panel);
+  transition:.2s;
+}
+
+.contact a:hover{
+  transform:translateY(-2px);
+  border-color:rgba(34,211,238,.35);
+}
+
+.contactIcon{
+  font-size:22px;
+}
+
+.contact small{
+  display:block;
+  color:var(--muted);
+  font-size:8px;
+}
+
+.contact strong{
+  font-size:11px;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:999;
+  display:none;
+  place-items:center;
+  padding:20px;
+  background:rgba(0,0,0,.78);
+  backdrop-filter:blur(8px);
+}
+
+.modal.show{
+  display:grid;
+}
+
+.modalBox{
+  width:min(540px,100%);
+  padding:21px;
+  border:1px solid rgba(34,211,238,.2);
+  border-radius:20px;
+  background:#081525;
+  box-shadow:0 30px 100px rgba(0,0,0,.65);
+  animation:modalIn .2s ease;
+}
+
+@keyframes modalIn{
+  from{
+    opacity:0;
+    transform:translateY(15px) scale(.98);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+.modalHead{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:13px;
+}
+
+.modalHead h3{
+  font-size:16px;
+}
+
+.close{
+  border:0;
+  background:transparent;
+  color:#94a3b8;
+  font-size:25px;
+}
+
+.close:hover{
+  color:white;
+}
+
+.modal textarea{
+  width:100%;
+  min-height:120px;
+  padding:13px;
+  resize:vertical;
+  color:white;
+  background:#040b16;
+  border:1px solid var(--line);
+  border-radius:12px;
+  outline:none;
+}
+
+.run{
+  width:100%;
+  margin-top:9px;
+  padding:13px;
+  border:0;
+  border-radius:12px;
+  color:white;
+  font-weight:900;
+  background:linear-gradient(90deg,#0891b2,#2563eb,#7c3aed);
+}
+
+.result{
+  display:none;
+  margin-top:11px;
+  padding:13px;
+  border-radius:12px;
+  background:rgba(52,211,153,.06);
+  border:1px solid rgba(52,211,153,.14);
+  color:#d1fae5;
+  font-size:11px;
+  line-height:1.7;
+}
+
+/* FOOTER */
+
+footer{
+  text-align:center;
+  padding:23px 5px;
+  color:#64748b;
+  font-size:9px;
+  line-height:1.8;
+}
+
+footer strong{
+  color:#94a3b8;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1050px){
+  .layout{
+    grid-template-columns:1fr;
+  }
+
+  .sidebar{
+    display:flex;
+    gap:5px;
+    overflow-x:auto;
+  }
+
+  .sideTitle,
+  .demoBox{
+    display:none;
+  }
+
+  .nav{
+    min-width:max-content;
+  }
+}
+
+@media(max-width:850px){
+  .kpis{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .actionGrid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .builderBox{
+    grid-template-columns:1fr;
+  }
+
+  .generate{
+    min-height:52px;
+  }
+}
+
+@media(max-width:560px){
+  .app{
+    width:96%;
+    margin:9px auto;
+  }
+
+  .header{
+    padding:13px;
+  }
+
+  .logo{
+    width:44px;
+    height:44px;
+    font-size:23px;
+  }
+
+  .brand h1{
+    font-size:17px;
+  }
+
+  .status{
+    font-size:0;
+    padding:10px;
+  }
+
+  .hero{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .kpis{
+    gap:8px;
+  }
+
+  .kpi{
+    padding:13px;
+  }
+
+  .value{
+    font-size:23px;
+  }
+
+  .actionGrid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .mini{
+    grid-template-columns:1fr;
+  }
+
+  .contact{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="header">
+
+  <div class="brand">
+    <div class="logo">🏥</div>
+
+    <div>
+      <h1>MEDORA AI</h1>
+      <p>Healthcare Intelligence Command Center</p>
+    </div>
+  </div>
+
+  <div class="status">
+    <span class="dot"></span>
+    AI SYSTEM ONLINE
+  </div>
+
+</header>
+
+
+<div class="layout">
+
+<aside class="sidebar">
+
+  <div class="sideTitle">COMMAND CENTER</div>
+
+  <button class="nav active" data-section="Overview">
+    <span class="navIcon">◉</span>
+    Overview
+  </button>
+
+  <button class="nav" data-section="Patients">
+    <span class="navIcon">👥</span>
+    Patients
+  </button>
+
+  <button class="nav" data-section="Emergency">
+    <span class="navIcon">🚑</span>
+    Emergency
+  </button>
+
+  <button class="nav" data-section="OPD Queue">
+    <span class="navIcon">📅</span>
+    OPD Queue
+  </button>
+
+  <button class="nav" data-section="Doctors">
+    <span class="navIcon">👨‍⚕️</span>
+    Doctors
+  </button>
+
+  <button class="nav" data-section="Resources">
+    <span class="navIcon">🛏️</span>
+    Resources
+  </button>
+
+  <button class="nav" data-section="Analytics">
+    <span class="navIcon">📊</span>
+    Analytics
+  </button>
+
+  <div class="demoBox">
+    <small>DEMO ENVIRONMENT</small>
+    <strong>MEDORA AI v4.0</strong>
+  </div>
+
+</aside>
+
+
+<main>
+
+<section class="hero">
+
+  <div>
+    <h2>Hospital <span>Intelligence</span></h2>
+    <p>
+      AI-assisted workflow automation for modern healthcare operations.
+    </p>
+  </div>
+
+  <select class="branch" id="branch">
+    <option>Central Hospital</option>
+    <option>City Branch</option>
+    <option>North Branch</option>
+    <option>South Branch</option>
+  </select>
+
+</section>
+
+
+<section class="kpis">
+
+  <div class="card kpi">
+    <div class="label">ACTIVE PATIENTS</div>
+    <div class="value" id="patients">1,284</div>
+    <div class="change green">↑ 8.4% today</div>
+  </div>
+
+  <div class="card kpi">
+    <div class="label">EMERGENCY CASES</div>
+    <div class="value" id="emergency">07</div>
+    <div class="change red">2 high priority</div>
+  </div>
+
+  <div class="card kpi">
+    <div class="label">DOCTORS ONLINE</div>
+    <div class="value" id="doctors">86</div>
+    <div class="change green">93% availability</div>
+  </div>
+
+  <div class="card kpi">
+    <div class="label">BEDS AVAILABLE</div>
+    <div class="value" id="beds">18</div>
+    <div class="change yellow">Monitor capacity</div>
+  </div>
+
+</section>
+
+
+<section class="grid">
+
+<div class="card ai">
+
+  <div class="head">
+    <h3>🤖 AI Operations Engine</h3>
+    <span>LIVE DEMO</span>
+  </div>
+
+  <div class="orb">✦</div>
+
+  <div class="aiTitle">
+    MEDORA Intelligence Active
+  </div>
+
+  <div class="aiSub">
+    Monitoring workflow signals and operational priorities
+  </div>
+
+  <div class="mini">
+
+    <div>
+      <strong class="green">ACTIVE</strong>
+      <small>Workflow Engine</small>
+    </div>
+
+    <div>
+      <strong class="green">READY</strong>
+      <small>Lead Capture</small>
+    </div>
+
+    <div>
+      <strong class="blue">ONLINE</strong>
+      <small>Command Layer</small>
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="card panel">
+
+  <div class="head">
+    <h3>🚨 Priority Monitor</h3>
+    <span>DEMO DATA</span>
+  </div>
+
+  <div class="priority">
+
+    <div class="priorityLeft">
+
+      <div class="pIcon">🚑</div>
+
+      <div>
+        <strong>Emergency Queue</strong>
+        <small>2 cases require attention</small>
+      </div>
+
+    </div>
+
+    <span class="badge high">HIGH</span>
+
+  </div>
+
+
+  <div class="priority">
+
+    <div class="priorityLeft">
+
+      <div class="pIcon">📅</div>
+
+      <div>
+        <strong>OPD Waiting</strong>
+        <small>24 patients</small>
+      </div>
+
+    </div>
+
+    <span class="badge medium">MEDIUM</span>
+
+  </div>
+
+
+  <div class="priority">
+
+    <div class="priorityLeft">
+
+      <div class="pIcon">🛏️</div>
+
+      <div>
+        <strong>Bed Capacity</strong>
+        <small>18 beds available</small>
+      </div>
+
+    </div>
+
+    <span class="badge normal">NORMAL</span>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<section class="card actions">
+
+  <div class="head">
+    <h3>⚡ AI Actions</h3>
+    <span>INTERACTIVE DEMO</span>
+  </div>
+
+  <div class="actionGrid">
+
+    <button class="action" data-demo="Emergency Workflow">
+      <div>🚑</div>
+      <span>Emergency</span>
+    </button>
+
+    <button class="action" data-demo="OPD Queue">
+      <div>📅</div>
+      <span>OPD Queue</span>
+    </button>
+
+    <button class="action" data-demo="Resource Monitor">
+      <div>🛏️</div>
+      <span>Resources</span>
+    </button>
+
+    <button class="action" data-demo="Doctor Availability">
+      <div>👨‍⚕️</div>
+      <span>Doctors</span>
+    </button>
+
+    <button class="action" data-demo="Hospital Analytics">
+      <div>📊</div>
+      <span>Analytics</span>
+    </button>
+
+    <button class="action" data-demo="AI Workflow Builder">
+      <div>🧠</div>
+      <span>AI Builder</span>
+    </button>
+
+  </div>
+
+</section>
+
+
+<section class="card builder">
+
+  <div class="head">
+    <h3>🧠 AI Workflow Builder</h3>
+    <span>SIMULATED INTELLIGENCE</span>
+  </div>
+
+  <div class="builderBox">
+
+    <textarea
+      id="workflowInput"
+      placeholder="Example: Reduce OPD waiting time and automatically notify staff when the queue becomes critical..."
+    ></textarea>
+
+    <button class="generate" id="generateBtn">
+      ✦ Generate AI Insight
+    </button>
+
+  </div>
+
+  <div class="aiResult" id="builderResult"></div>
+
+</section>
+
+
+<section class="card activity">
+
+  <div class="head">
+    <h3>🔔 Live Activity</h3>
+    <span>SIMULATED FEED</span>
+  </div>
+
+  <div id="feed">
+
+    <div class="activityItem">
+      <span class="activityDot"></span>
+      <div>
+        <strong>MEDORA Intelligence Engine initialized</strong>
+        <small>Just now • Command Center</small>
+      </div>
+    </div>
+
+    <div class="activityItem">
+      <span class="activityDot"></span>
+      <div>
+        <strong>Doctor availability synchronized</strong>
+        <small>2 minutes ago • Operations</small>
+      </div>
+    </div>
+
+    <div class="activityItem">
+      <span class="activityDot"></span>
+      <div>
+        <strong>Hospital resource status refreshed</strong>
+        <small>5 minutes ago • Resources</small>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="contact">
+
+  <a
+    href="https://wa.me/919919900020?text=Hello%20Manish%2C%20I%20want%20to%20see%20the%20MEDORA%20AI%20demo."
+    target="_blank"
+    rel="noopener"
+  >
+    <div class="contactIcon">💬</div>
+
+    <div>
+      <small>WHATSAPP</small>
+      <strong>Chat for a Demo</strong>
+    </div>
+  </a>
+
+
+  <a
+    href="mailto:mk906036875@gmail.com?subject=MEDORA%20AI%20Demo%20Request"
+  >
+    <div class="contactIcon">✉️</div>
+
+    <div>
+      <small>EMAIL</small>
+      <strong>mk906036875@gmail.com</strong>
+    </div>
+  </a>
+
+</section>
+
+
+<footer>
+
+  <strong>MEDORA AI</strong>
+  • Healthcare workflow automation concept demo.
+
+  <br>
+
+  © 2026 MEDORA AI • Executive Demo Environment.
+
+  <br>
+
+  ⚠️ This is a software concept/demo. It does not provide
+  medical diagnosis, treatment or emergency-response decisions.
+
+</footer>
+
+</main>
+</div>
+</div>
+
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+  <div class="modalBox">
+
+    <div class="modalHead">
+
+      <h3 id="modalTitle">
+        ✦ MEDORA AI Workflow
+      </h3>
+
+      <button class="close" id="closeModal">×</button>
+
+    </div>
+
+    <textarea
+      id="modalInput"
+      placeholder="Describe the workflow you want MEDORA AI to simulate..."
+    ></textarea>
+
+    <button class="run" id="runBtn">
+      ✦ Run MEDORA Simulation
+    </button>
+
+    <div class="result" id="modalResult"></div>
+
+  </div>
+
+</div>
+
+
+ 
