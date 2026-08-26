@@ -1,7 +1,7 @@
  /* =========================================================
    MEDORA AI v4.0
    Healthcare Intelligence Command Center
-   Complete Interactive Script
+   COMPLETE INTERACTIVE SCRIPT
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -33,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const doctorsEl = document.getElementById("doctors");
   const bedsEl = document.getElementById("beds");
 
-
   /* =======================================================
      STATE
      ======================================================= */
@@ -41,6 +40,51 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentDemo = "AI Workflow";
   let activityCount = 0;
 
+  /* =======================================================
+     SAFE HTML ESCAPE
+     ======================================================= */
+
+  function escapeHTML(value) {
+
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  }
+
+  /* =======================================================
+     ACTIVITY FEED
+     ======================================================= */
+
+  function addActivity(message) {
+
+    if (!feed) return;
+
+    const item = document.createElement("div");
+
+    item.className = "activityItem";
+
+    item.innerHTML = `
+      <span class="activityDot"></span>
+
+      <div>
+        <strong>${escapeHTML(message)}</strong>
+        <small>Just now • MEDORA AI</small>
+      </div>
+    `;
+
+    feed.prepend(item);
+
+    activityCount++;
+
+    while (feed.children.length > 7) {
+      feed.removeChild(feed.lastElementChild);
+    }
+
+  }
 
   /* =======================================================
      NAVIGATION
@@ -64,24 +108,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
       addActivity(`${section} module opened`);
 
-      /* Open relevant demo for operational sections */
-
       const demoMap = {
+
         "Emergency": "Emergency Workflow",
+
         "OPD Queue": "OPD Queue",
+
         "Doctors": "Doctor Availability",
+
         "Resources": "Resource Monitor",
+
         "Analytics": "Hospital Analytics"
+
       };
 
       if (demoMap[section]) {
+
         openDemo(demoMap[section]);
+
       }
 
     });
 
   });
-
 
   /* =======================================================
      ACTION BUTTONS
@@ -102,7 +151,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   });
-
 
   /* =======================================================
      DEFAULT PROMPTS
@@ -134,8 +182,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     return prompts[type] ||
       "Explore an AI-assisted hospital workflow.";
-  }
 
+  }
 
   /* =======================================================
      OPEN DEMO
@@ -146,8 +194,11 @@ document.addEventListener("DOMContentLoaded", () => {
     currentDemo = type;
 
     if (!modal) {
+
       console.warn("MEDORA modal not found.");
+
       return;
+
     }
 
     modal.classList.add("show");
@@ -155,28 +206,36 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.style.overflow = "hidden";
 
     if (modalTitle) {
+
       modalTitle.textContent =
         "✦ " + type + " — MEDORA AI";
+
     }
 
     if (modalInput) {
+
       modalInput.value =
         getDefaultPrompt(type);
 
       setTimeout(() => {
+
         modalInput.focus();
+
       }, 100);
+
     }
 
     if (modalResult) {
+
       modalResult.style.display = "none";
+
       modalResult.innerHTML = "";
+
     }
 
     addActivity(`${type} simulation opened`);
 
   }
-
 
   /* =======================================================
      CLOSE DEMO
@@ -192,14 +251,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
   if (closeModalBtn) {
-    closeModalBtn.addEventListener("click", closeDemo);
+
+    closeModalBtn.addEventListener(
+      "click",
+      closeDemo
+    );
+
   }
 
-
   /* =======================================================
-     CLOSE WHEN CLICKING OUTSIDE MODAL
+     CLICK OUTSIDE MODAL
      ======================================================= */
 
   if (modal) {
@@ -207,13 +269,14 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.addEventListener("click", (event) => {
 
       if (event.target === modal) {
+
         closeDemo();
+
       }
 
     });
 
   }
-
 
   /* =======================================================
      ESC KEY
@@ -222,22 +285,25 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("keydown", (event) => {
 
     if (event.key === "Escape") {
+
       closeDemo();
+
     }
 
   });
 
-
   /* =======================================================
-     RUN MODAL AI DEMO
+     RUN MODAL AI
      ======================================================= */
 
   if (runBtn) {
 
-    runBtn.addEventListener("click", runModalAI);
+    runBtn.addEventListener(
+      "click",
+      runModalAI
+    );
 
   }
-
 
   function runModalAI() {
 
@@ -250,20 +316,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
       modalResult.innerHTML = `
         <strong>⚠️ MEDORA AI</strong><br><br>
-        Please describe a workflow before running the simulation.
+        Please describe a workflow before running
+        the simulation.
       `;
 
       modalResult.style.display = "block";
 
       return;
+
     }
 
-    /* Loading state */
+    if (runBtn) {
 
-    runBtn.disabled = true;
+      runBtn.disabled = true;
 
-    runBtn.textContent =
-      "⏳ MEDORA is analyzing...";
+      runBtn.textContent =
+        "⏳ MEDORA is analyzing...";
+
+    }
 
     modalResult.style.display = "block";
 
@@ -273,20 +343,24 @@ document.addEventListener("DOMContentLoaded", () => {
       Processing workflow request...
     `;
 
-
-    /* Simulated processing */
-
     setTimeout(() => {
 
       const analysis =
-        generateWorkflowAnalysis(text, currentDemo);
+        generateWorkflowAnalysis(
+          text,
+          currentDemo
+        );
 
       modalResult.innerHTML = analysis;
 
-      runBtn.disabled = false;
+      if (runBtn) {
 
-      runBtn.textContent =
-        "✦ Run MEDORA Simulation";
+        runBtn.disabled = false;
+
+        runBtn.textContent =
+          "✦ Run MEDORA Simulation";
+
+      }
 
       addActivity(
         `${currentDemo} simulation completed`
@@ -295,7 +369,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 900);
 
   }
-
 
   /* =======================================================
      WORKFLOW ANALYSIS
@@ -308,12 +381,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <br><br>
 
-      <strong>Workflow:</strong><br>
+      <strong>Workflow Request:</strong><br>
       ${escapeHTML(text)}
 
       <br><br>
 
-      <strong>AI workflow model:</strong>
+      <strong>AI Workflow Model</strong>
 
       <br><br>
 
@@ -349,19 +422,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <strong>MEDORA Recommendation:</strong><br>
 
-      Centralize this workflow inside a single operational
-      queue with automated status tracking, ownership and
-      follow-up visibility.
+      Centralize this workflow inside a single
+      operational queue with automated routing,
+      ownership tracking and follow-up visibility.
 
       <br><br>
 
       <span style="color:#94a3b8">
-        ${type} • Simulated AI output • Demo environment only
+        ${escapeHTML(type)}
+        • Simulated AI output
+        • Demo environment only
       </span>
     `;
 
   }
-
 
   /* =======================================================
      AI WORKFLOW BUILDER
@@ -369,10 +443,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (generateBtn) {
 
-    generateBtn.addEventListener("click", generateBuilderInsight);
+    generateBtn.addEventListener(
+      "click",
+      generateBuilderInsight
+    );
 
   }
-
 
   function generateBuilderInsight() {
 
@@ -393,8 +469,8 @@ document.addEventListener("DOMContentLoaded", () => {
       workflowInput.focus();
 
       return;
-    }
 
+    }
 
     generateBtn.disabled = true;
 
@@ -408,7 +484,6 @@ document.addEventListener("DOMContentLoaded", () => {
       Analyzing your workflow requirement...
     `;
 
-
     setTimeout(() => {
 
       builderResult.innerHTML = `
@@ -417,6 +492,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <br><br>
 
         <strong>Business Requirement:</strong><br>
+
         ${escapeHTML(text)}
 
         <br><br>
@@ -457,9 +533,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         <strong>Executive Insight:</strong><br>
 
-        The workflow can be structured into a centralized
-        command queue with automated routing, monitoring
-        and follow-up visibility.
+        The workflow can be structured into a
+        centralized command queue with automated
+        routing, monitoring and follow-up visibility.
 
         <br><br>
 
@@ -482,7 +558,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
   /* =======================================================
      BRANCH SWITCH
      ======================================================= */
@@ -504,9 +579,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
   /* =======================================================
-     LIVE ACTIVITY
+     LIVE ACTIVITY EVENTS
      ======================================================= */
 
   const events = [
@@ -529,42 +603,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   ];
 
-
-  function addActivity(message) {
-
-    if (!feed) return;
-
-    const item =
-      document.createElement("div");
-
-    item.className =
-      "activityItem";
-
-    item.innerHTML = `
-      <span class="activityDot"></span>
-
-      <div>
-        <strong>${escapeHTML(message)}</strong>
-
-        <small>
-          Just now • MEDORA AI
-        </small>
-      </div>
-    `;
-
-    feed.prepend(item);
-
-    activityCount++;
-
-    while (feed.children.length > 7) {
-      feed.removeChild(feed.lastElementChild);
-    }
-
-  }
-
-
   /* =======================================================
-     AUTOMATIC ACTIVITY FEED
+     AUTOMATIC ACTIVITY
      ======================================================= */
 
   setInterval(() => {
@@ -580,32 +620,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }, 7000);
 
-
   /* =======================================================
      DASHBOARD SIMULATION
      ======================================================= */
 
   function updateDashboard() {
 
-    if (!patientsEl ||
-        !emergencyEl ||
-        !doctorsEl ||
-        !bedsEl) {
+    if (
+      !patientsEl ||
+      !emergencyEl ||
+      !doctorsEl ||
+      !bedsEl
+    ) {
+
       return;
+
     }
 
     const patients =
-      1260 + Math.floor(Math.random() * 50);
+      1260 +
+      Math.floor(Math.random() * 50);
 
     const emergency =
-      5 + Math.floor(Math.random() * 6);
+      5 +
+      Math.floor(Math.random() * 6);
 
     const doctors =
-      80 + Math.floor(Math.random() * 12);
+      80 +
+      Math.floor(Math.random() * 12);
 
     const beds =
-      14 + Math.floor(Math.random() * 10);
-
+      14 +
+      Math.floor(Math.random() * 10);
 
     animateNumber(
       patientsEl,
@@ -633,11 +679,127 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
   /* =======================================================
      NUMBER ANIMATION
      ======================================================= */
 
-  function animateNumber(element, target, padded) {
+  function animateNumber(
+    element,
+    target,
+    padded = false
+  ) {
 
-    const duration
+    if (!element) return;
+
+    const start =
+      parseInt(
+        element.textContent.replace(
+          /,/g,
+          ""
+        ),
+        10
+      ) || 0;
+
+    const duration = 650;
+
+    const startTime = performance.now();
+
+    function update(currentTime) {
+
+      const progress =
+        Math.min(
+          (currentTime - startTime) /
+          duration,
+          1
+        );
+
+      const eased =
+        1 - Math.pow(
+          1 - progress,
+          3
+        );
+
+      const current =
+        Math.round(
+          start +
+          (target - start) *
+          eased
+        );
+
+      if (padded) {
+
+        element.textContent =
+          String(current).padStart(
+            2,
+            "0"
+          );
+
+      } else {
+
+        element.textContent =
+          current.toLocaleString();
+
+      }
+
+      if (progress < 1) {
+
+        requestAnimationFrame(update);
+
+      }
+
+    }
+
+    requestAnimationFrame(update);
+
+  }
+
+  /* =======================================================
+     KEYBOARD SHORTCUT
+     ======================================================= */
+
+  document.addEventListener("keydown", (event) => {
+
+    if (
+      (event.ctrlKey || event.metaKey) &&
+      event.key.toLowerCase() === "k"
+    ) {
+
+      event.preventDefault();
+
+      openDemo("AI Workflow Builder");
+
+    }
+
+  });
+
+  /* =======================================================
+     INITIAL SYSTEM UPDATE
+     ======================================================= */
+
+  setTimeout(() => {
+
+    addActivity(
+      "MEDORA Intelligence Engine initialized"
+    );
+
+  }, 1200);
+
+  /* =======================================================
+     INITIAL DASHBOARD REFRESH
+     ======================================================= */
+
+  setTimeout(() => {
+
+    updateDashboard();
+
+  }, 1800);
+
+  /* =======================================================
+     SYSTEM READY
+     ======================================================= */
+
+  console.log(
+    "✓ MEDORA AI v4.0 — All modules ready."
+  );
+
+});
