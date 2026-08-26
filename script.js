@@ -1,348 +1,156 @@
- /* =========================================================
-   MEDORA AI v4.0
-   PREMIUM HEALTHCARE COMMAND CENTER
-   FULL INTERACTIVE SCRIPT
-   ========================================================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  console.log("MEDORA AI v4.0 initialized.");
-
-  /* =====================================================
-     ELEMENTS
-     ===================================================== */
+ document.addEventListener("DOMContentLoaded", function () {
 
   const modal = document.getElementById("modal");
-  const modalTitle = document.getElementById("modalTitle");
+  const title = document.getElementById("modalTitle");
+  const input = document.getElementById("modalInput");
+  const result = document.getElementById("modalResult");
+  const runBtn = document.getElementById("runBtn");
+  const closeBtn = document.getElementById("closeModal");
+  const feed = document.getElementById("feed");
 
-  const modalInput =
-    document.getElementById("modalInput") ||
-    document.getElementById("input");
-
-  const runBtn =
-    document.getElementById("runBtn");
-
-  const modalResult =
-    document.getElementById("modalResult") ||
-    document.getElementById("result");
-
-  const closeModal =
-    document.getElementById("closeModal");
-
-  const feed =
-    document.getElementById("feed");
-
-  const branch =
-    document.getElementById("branch");
-
-
-  /* =====================================================
-     NAVIGATION
-     ===================================================== */
-
-  document.querySelectorAll(".nav").forEach(button => {
-
-    button.addEventListener("click", () => {
-
-      document
-        .querySelectorAll(".nav")
-        .forEach(item => {
-          item.classList.remove("active");
-        });
-
-      button.classList.add("active");
-
-      const section =
-        button.innerText.trim();
-
-      addActivity(
-        section + " module opened"
-      );
-
-    });
-
-  });
-
-
-  /* =====================================================
-     AI ACTION BUTTONS
-     ===================================================== */
-
-  const actionButtons =
-    document.querySelectorAll(".action");
-
-  actionButtons.forEach(button => {
-
-    button.addEventListener("click", () => {
-
-      const label =
-        button.querySelector("span");
-
-      if (!label) return;
-
-      const action =
-        label.innerText.trim();
-
-      openDemo(action);
-
-    });
-
-  });
-
-
-  /* =====================================================
-     OPEN DEMO
-     ===================================================== */
-
-  window.openDemo = function(type) {
-
-    if (!modal) {
-      console.error("MEDORA modal not found.");
-      return;
-    }
-
-    modal.classList.add("show");
-
-    if (modalTitle) {
-
-      modalTitle.innerHTML =
-        "✦ " +
-        escapeHTML(type) +
-        " — MEDORA AI";
-
-    }
-
-    if (modalInput) {
-
-      modalInput.value =
-        getPrompt(type);
-
-      modalInput.focus();
-
-    }
-
-    if (modalResult) {
-
-      modalResult.style.display =
-        "none";
-
-      modalResult.innerHTML = "";
-
-    }
-
-    addActivity(
-      type + " AI workflow opened"
-    );
-
-  };
-
-
-  /* =====================================================
-     CLOSE DEMO
-     ===================================================== */
-
-  function closeDemo() {
+  function openMEDORA(type) {
 
     if (!modal) return;
 
-    modal.classList.remove("show");
+    modal.classList.add("show");
+
+    if (title) {
+      title.textContent = "✦ " + type + " — MEDORA AI";
+    }
+
+    if (input) {
+      input.value =
+        "Analyze " + type +
+        " workflow and suggest an automated hospital operations process.";
+    }
+
+    if (result) {
+      result.style.display = "none";
+      result.innerHTML = "";
+    }
+
+    addActivity(type + " workflow opened");
 
   }
 
+  function closeMEDORA() {
 
-  window.closeDemo = closeDemo;
-
-
-  if (closeModal) {
-
-    closeModal.addEventListener(
-      "click",
-      closeDemo
-    );
+    if (modal) {
+      modal.classList.remove("show");
+    }
 
   }
 
+  window.openDemo = openMEDORA;
+  window.closeDemo = closeMEDORA;
 
-  /* =====================================================
-     ESC KEY
-     ===================================================== */
 
-  document.addEventListener(
-    "keydown",
-    event => {
+  /* AI ACTION BUTTONS */
 
-      if (
-        event.key === "Escape" &&
-        modal &&
-        modal.classList.contains("show")
-      ) {
+  document.querySelectorAll(".action").forEach(function (button) {
 
-        closeDemo();
+    button.addEventListener("click", function () {
 
+      const text = this.innerText.toLowerCase();
+
+      let type = "AI Workflow";
+
+      if (text.includes("emergency")) {
+        type = "Emergency Workflow";
+      }
+      else if (text.includes("opd")) {
+        type = "OPD Queue";
+      }
+      else if (text.includes("resource")) {
+        type = "Resource Monitor";
+      }
+      else if (text.includes("doctor")) {
+        type = "Doctor Availability";
+      }
+      else if (text.includes("analytic")) {
+        type = "Hospital Analytics";
+      }
+      else if (text.includes("builder")) {
+        type = "AI Workflow Builder";
       }
 
-    }
-  );
+      openMEDORA(type);
+
+    });
+
+  });
 
 
-  /* =====================================================
-     BACKDROP
-     ===================================================== */
+  /* CLOSE */
+
+  if (closeBtn) {
+    closeBtn.addEventListener("click", closeMEDORA);
+  }
+
 
   if (modal) {
 
-    modal.addEventListener(
-      "click",
-      event => {
+    modal.addEventListener("click", function (event) {
 
-        if (event.target === modal) {
-
-          closeDemo();
-
-        }
-
+      if (event.target === modal) {
+        closeMEDORA();
       }
-    );
+
+    });
 
   }
 
 
-  /* =====================================================
-     DEFAULT PROMPTS
-     ===================================================== */
+  document.addEventListener("keydown", function (event) {
 
-  function getPrompt(type) {
+    if (event.key === "Escape") {
+      closeMEDORA();
+    }
 
-    const prompts = {
-
-      "Emergency":
-        "Analyze an emergency workflow and suggest how requests can be captured, prioritized and routed.",
-
-      "OPD Queue":
-        "Analyze OPD queue management and suggest an automated patient-flow workflow.",
-
-      "Resources":
-        "Analyze hospital resource availability and suggest an operational monitoring workflow.",
-
-      "Doctors":
-        "Analyze doctor availability and suggest an intelligent scheduling workflow.",
-
-      "Analytics":
-        "Analyze hospital operational activity and generate an executive insight summary.",
-
-      "AI Builder":
-        "Create an AI-assisted workflow for a hospital operational process."
-
-    };
-
-    return prompts[type] ||
-      "Create an AI-assisted healthcare operations workflow.";
-
-  }
+  });
 
 
-  /* =====================================================
-     RUN MEDORA SIMULATION
-     ===================================================== */
+  /* RUN AI */
 
   if (runBtn) {
 
-    runBtn.addEventListener(
-      "click",
-      runSimulation
-    );
+    runBtn.addEventListener("click", function () {
 
-  }
+      const request =
+        input ? input.value.trim() : "";
 
+      if (!request) {
 
-  function runSimulation() {
+        result.innerHTML =
+          "<strong>⚠️ Please enter a workflow.</strong>";
 
-    if (!modalInput || !modalResult) {
+        result.style.display = "block";
 
-      console.error(
-        "MEDORA simulation elements missing."
-      );
+        return;
+      }
 
-      return;
+      result.style.display = "block";
 
-    }
+      result.innerHTML = `
+        <strong>✦ MEDORA AI — Intelligence Engine</strong>
+        <br><br>
 
-    const request =
-      modalInput.value.trim();
-
-
-    if (!request) {
-
-      modalResult.innerHTML = `
-
-        <strong>⚠️ MEDORA AI</strong>
+        <strong>Request:</strong><br>
+        ${safe(request)}
 
         <br><br>
 
-        Please describe the workflow
-        you want to simulate.
-
-      `;
-
-      modalResult.style.display =
-        "block";
-
-      return;
-
-    }
-
-
-    /* Loading */
-
-    modalResult.style.display =
-      "block";
-
-    modalResult.innerHTML = `
-
-      <strong>
-        ✦ MEDORA Intelligence Engine
-      </strong>
-
-      <br><br>
-
-      Analyzing workflow signals...
-
-    `;
-
-
-    /* Simulated processing */
-
-    setTimeout(() => {
-
-      modalResult.innerHTML = `
-
-        <strong>
-          ✦ MEDORA AI — Workflow Insight
-        </strong>
-
-        <br><br>
-
-        <strong>Request received:</strong>
-
-        <br>
-
-        ${escapeHTML(request)}
-
-        <br><br>
-
-        <strong>
-          Recommended workflow
-        </strong>
+        <strong>Recommended Automation Flow</strong>
 
         <br><br>
 
         <span class="green">01</span>
-        Capture incoming request
+        Capture request
 
         <br>
 
         <span class="green">02</span>
-        Classify workflow priority
+        Classify priority
 
         <br>
 
@@ -352,190 +160,96 @@ document.addEventListener("DOMContentLoaded", () => {
         <br>
 
         <span class="green">04</span>
-        Track workflow status
+        Track workflow
 
         <br>
 
         <span class="green">05</span>
-        Generate follow-up task
+        Create follow-up task
 
         <br>
 
         <span class="green">06</span>
-        Create management insight
+        Generate management insight
 
         <br><br>
 
-        <strong>
-          MEDORA Recommendation
-        </strong>
+        <strong>MEDORA Recommendation</strong>
 
         <br>
 
-        Centralize operational requests,
-        automate repetitive coordination,
-        and provide management with
-        real-time workflow visibility.
+        Centralize operational workflows
+        and automate repetitive coordination
+        tasks for better management visibility.
 
         <br><br>
 
         <small style="color:#94a3b8">
-
-          Simulated AI demonstration only.
-          Not a medical diagnosis,
-          treatment or emergency-response system.
-
+        Simulated AI demonstration only.
+        Not a medical diagnosis or treatment system.
         </small>
-
       `;
 
-      addActivity(
-        "MEDORA generated workflow insight"
-      );
+      addActivity("MEDORA AI generated workflow insight");
 
-    }, 900);
+    });
 
   }
 
 
-  /* =====================================================
-     AI BUILDER
-     ===================================================== */
-
-  const builderButton =
-    [...document.querySelectorAll("button")]
-      .find(button =>
-        button.innerText
-          .toLowerCase()
-          .includes("generate ai insight")
-      );
-
-
-  if (builderButton) {
-
-    builderButton.addEventListener(
-      "click",
-      () => {
-
-        openDemo("AI Builder");
-
-      }
-    );
-
-  }
-
-
-  /* =====================================================
-     BRANCH SWITCH
-     ===================================================== */
-
-  if (branch) {
-
-    branch.addEventListener(
-      "change",
-      function () {
-
-        addActivity(
-          "Branch switched to " +
-          this.value
-        );
-
-      }
-    );
-
-  }
-
-
-  /* =====================================================
-     LIVE ACTIVITY
-     ===================================================== */
+  /* LIVE ACTIVITY */
 
   function addActivity(message) {
 
     if (!feed) return;
 
-    const item =
-      document.createElement("div");
+    const item = document.createElement("div");
 
-    item.className =
-      "activityItem";
+    item.className = "activityItem";
 
     item.innerHTML = `
-
       <span class="activityDot"></span>
 
       <div>
-
-        <strong>
-          ${escapeHTML(message)}
-        </strong>
-
-        <small>
-          Just now • MEDORA AI
-        </small>
-
+        <strong>${safe(message)}</strong>
+        <small>Just now • MEDORA AI</small>
       </div>
-
     `;
 
     feed.prepend(item);
 
-
     while (feed.children.length > 6) {
-
-      feed.removeChild(
-        feed.lastElementChild
-      );
-
+      feed.removeChild(feed.lastElementChild);
     }
 
   }
 
 
-  /* =====================================================
-     AUTOMATIC ACTIVITY
-     ===================================================== */
+  /* AUTOMATIC ACTIVITY */
 
   const events = [
-
     "AI monitoring cycle completed",
-
-    "Operational dashboard synchronized",
-
-    "Workflow queue refreshed",
-
-    "Hospital resource status checked",
-
-    "Doctor availability synchronized",
-
-    "Command center intelligence updated",
-
-    "AI workflow signal detected"
-
+    "Workflow queue synchronized",
+    "Resource status refreshed",
+    "Doctor availability updated",
+    "Command center synchronized"
   ];
 
+  setInterval(function () {
 
-  setInterval(() => {
+    const event =
+      events[Math.floor(Math.random() * events.length)];
 
-    const randomEvent =
-      events[
-        Math.floor(
-          Math.random() * events.length
-        )
-      ];
-
-    addActivity(randomEvent);
+    addActivity(event);
 
   }, 7000);
 
 
-  /* =====================================================
-     SAFE HTML
-     ===================================================== */
+  /* SAFE TEXT */
 
-  function escapeHTML(value) {
+  function safe(text) {
 
-    return String(value)
+    return String(text)
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
@@ -545,21 +259,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  /* =====================================================
-     SYSTEM READY
-     ===================================================== */
-
-  setTimeout(() => {
-
-    addActivity(
-      "MEDORA Intelligence Engine ready"
-    );
-
-  }, 1200);
-
-
   console.log(
-    "✓ MEDORA AI v4.0 — All interactive modules ready."
+    "MEDORA AI v4.0 — Interactive system ready."
   );
 
 });
